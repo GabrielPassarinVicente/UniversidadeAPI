@@ -27,8 +27,9 @@ namespace UniversidadeAPI.Repositories
 
         public async Task<Curso> GetById(int id)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
+             using (var conexao = _conectarBanco.CriarConexao())
             {
+                
                 var sql = "SELECT * FROM Cursos WHERE IdCursos = @IdCursos";
 
                 return await conexao.QueryFirstOrDefaultAsync<Curso>(sql, new { Id = id });
@@ -38,8 +39,11 @@ namespace UniversidadeAPI.Repositories
 
         public async Task<Curso> Add(Curso curso)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
+             using (var conexao = _conectarBanco.CriarConexao())
             {
+                
+                await conexao.OpenAsync(); 
+                
 
                 var sql = @"
                     INSERT INTO Cursos (Nome, CargaHoraria, Departamentos_idDepartamentos)

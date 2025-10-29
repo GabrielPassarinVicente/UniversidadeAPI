@@ -3,48 +3,60 @@
   "WorkspaceRootPath": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\conectarbanco.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\conectarbanco.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\repositories\\cursorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\repositories\\cursorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\repositories\\alunorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\repositories\\alunorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\repositories\\professorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\repositories\\professorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\services\\alunoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\services\\alunoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\repositories\\cursorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\repositories\\cursorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\models\\aluno.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\models\\aluno.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\controllers\\alunoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\controllers\\alunoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\conectarbanco.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\conectarbanco.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\controllers\\cursoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\controllers\\cursoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\controllers\\professorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\controllers\\professorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\models\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\models\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\models\\aluno.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\models\\aluno.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\repositories\\professorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\repositories\\professorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\controllers\\professorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\controllers\\professorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\models\\curso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -65,10 +77,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\repositories\\iprofessorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\repositories\\iprofessorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\services\\alunoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|solutionrelative:universidadeapi\\services\\alunoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6E8C120-C366-4FE7-8D42-7DF4DEB438A4}|UniversidadeAPI\\UniversidadeAPI.csproj|c:\\users\\gabriel\\onedrive\\\u00E1rea de trabalho\\fti\\projetos cursos\\universidadeapi\\universidadeapi\\services\\cursoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -98,7 +106,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 49,
+          "SelectedChildIndex": 55,
           "Children": [
             {
               "$type": "Bookmark",
@@ -298,59 +306,150 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "UniversidadeAPI\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Properties\\launchSettings.json",
-              "RelativeToolTip": "UniversidadeAPI\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-23T23:05:41.267Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CursoRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\CursoRepository.cs",
-              "RelativeDocumentMoniker": "UniversidadeAPI\\Repositories\\CursoRepository.cs",
-              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\CursoRepository.cs",
-              "RelativeToolTip": "UniversidadeAPI\\Repositories\\CursoRepository.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAcwE0AAAA8AAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "Aluno.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Models\\Aluno.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\Models\\Aluno.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Models\\Aluno.cs",
+              "RelativeToolTip": "UniversidadeAPI\\Models\\Aluno.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T23:25:46.513Z",
+              "WhenOpened": "2025-10-16T23:23:51.728Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "AlunoRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\AlunoRepository.cs",
-              "RelativeDocumentMoniker": "UniversidadeAPI\\Repositories\\AlunoRepository.cs",
-              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\AlunoRepository.cs",
-              "RelativeToolTip": "UniversidadeAPI\\Repositories\\AlunoRepository.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAmwFYAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T23:25:11.65Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "AlunosController.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Controllers\\AlunosController.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Controllers\\AlunosController.cs",
               "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Controllers\\AlunosController.cs",
               "RelativeToolTip": "UniversidadeAPI\\Controllers\\AlunosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-16T23:45:39.629Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AlunoService.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\AlunoService.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\Services\\AlunoService.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\AlunoService.cs",
+              "RelativeToolTip": "UniversidadeAPI\\Services\\AlunoService.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAIA6wC8AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T23:27:25.873Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TokenController.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Controllers\\TokenController.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\Controllers\\TokenController.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Controllers\\TokenController.cs",
+              "RelativeToolTip": "UniversidadeAPI\\Controllers\\TokenController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T22:19:07.375Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Program.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Program.cs",
+              "RelativeToolTip": "UniversidadeAPI\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T23:38:14.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CursosController.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Controllers\\CursosController.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\Controllers\\CursosController.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Controllers\\CursosController.cs",
+              "RelativeToolTip": "UniversidadeAPI\\Controllers\\CursosController.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAcwFAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T23:23:06.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CursoRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\CursoRepository.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\Repositories\\CursoRepository.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\CursoRepository.cs",
+              "RelativeToolTip": "UniversidadeAPI\\Repositories\\CursoRepository.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAqwC0AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T23:25:46.513Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AlunoRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\AlunoRepository.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\Repositories\\AlunoRepository.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\AlunoRepository.cs",
+              "RelativeToolTip": "UniversidadeAPI\\Repositories\\AlunoRepository.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAkwHoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T23:25:11.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "ConectarBanco.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\ConectarBanco.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\ConectarBanco.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\ConectarBanco.cs",
+              "RelativeToolTip": "UniversidadeAPI\\ConectarBanco.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T23:30:17.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\TokenService.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\Services\\TokenService.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\TokenService.cs",
+              "RelativeToolTip": "UniversidadeAPI\\Services\\TokenService.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAgwB8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T22:24:28.809Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "LoginDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Models\\LoginDTO.cs",
+              "RelativeDocumentMoniker": "UniversidadeAPI\\Models\\LoginDTO.cs",
+              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Models\\LoginDTO.cs",
+              "RelativeToolTip": "UniversidadeAPI\\Models\\LoginDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T22:27:13.565Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "ProfessorRepository.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\ProfessorRepository.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Repositories\\ProfessorRepository.cs",
@@ -363,20 +462,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Program.cs",
-              "RelativeDocumentMoniker": "UniversidadeAPI\\Program.cs",
-              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Program.cs",
-              "RelativeToolTip": "UniversidadeAPI\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T23:38:14.093Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 11,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\appsettings.json",
               "RelativeDocumentMoniker": "UniversidadeAPI\\appsettings.json",
@@ -389,33 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ConectarBanco.cs",
-              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\ConectarBanco.cs",
-              "RelativeDocumentMoniker": "UniversidadeAPI\\ConectarBanco.cs",
-              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\ConectarBanco.cs",
-              "RelativeToolTip": "UniversidadeAPI\\ConectarBanco.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T23:30:17.208Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CursosController.cs",
-              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Controllers\\CursosController.cs",
-              "RelativeDocumentMoniker": "UniversidadeAPI\\Controllers\\CursosController.cs",
-              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Controllers\\CursosController.cs",
-              "RelativeToolTip": "UniversidadeAPI\\Controllers\\CursosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T23:23:06.429Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "ProfessoresController.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Controllers\\ProfessoresController.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Controllers\\ProfessoresController.cs",
@@ -428,20 +488,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Aluno.cs",
-              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Models\\Aluno.cs",
-              "RelativeDocumentMoniker": "UniversidadeAPI\\Models\\Aluno.cs",
-              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Models\\Aluno.cs",
-              "RelativeToolTip": "UniversidadeAPI\\Models\\Aluno.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T23:23:51.728Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Curso.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Models\\Curso.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Models\\Curso.cs",
@@ -454,7 +501,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "Professor.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Models\\Professor.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Models\\Professor.cs",
@@ -467,7 +514,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "IAlunoRepository.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\IAlunoRepository.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Repositories\\IAlunoRepository.cs",
@@ -480,7 +527,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "ICursoRepository.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\ICursoRepository.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Repositories\\ICursoRepository.cs",
@@ -493,7 +540,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "IProfessorRepository.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Repositories\\IProfessorRepository.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Repositories\\IProfessorRepository.cs",
@@ -506,20 +553,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "AlunoService.cs",
-              "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\AlunoService.cs",
-              "RelativeDocumentMoniker": "UniversidadeAPI\\Services\\AlunoService.cs",
-              "ToolTip": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\AlunoService.cs",
-              "RelativeToolTip": "UniversidadeAPI\\Services\\AlunoService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T23:27:25.873Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "CursoService.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\CursoService.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Services\\CursoService.cs",
@@ -532,7 +566,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "IAlunoService.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\IAlunoService.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Services\\IAlunoService.cs",
@@ -545,7 +579,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "ICursoService.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\ICursoService.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Services\\ICursoService.cs",
@@ -558,7 +592,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "IProfessorService.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\IProfessorService.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Services\\IProfessorService.cs",
@@ -571,7 +605,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "ProfessorService.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel\\OneDrive\\\u00C1rea de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\Services\\ProfessorService.cs",
               "RelativeDocumentMoniker": "UniversidadeAPI\\Services\\ProfessorService.cs",

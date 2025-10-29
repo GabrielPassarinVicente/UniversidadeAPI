@@ -44,7 +44,7 @@ namespace UniversidadeAPI.Controllers
             {
                 var newAluno = await _alunoService.AddAluno(aluno);
 
-                return CreatedAtAction(nameof(GetAluno), new { id = newAluno.Id }, newAluno);
+                return CreatedAtAction(nameof(GetAluno), new { id = newAluno.IdAluno }, newAluno);
             }
             catch (ArgumentException ex)
             {
@@ -55,7 +55,7 @@ namespace UniversidadeAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAluno(int id, Aluno aluno)
         {
-            if (id != aluno.Id)
+            if (id != aluno.IdAluno)
             {
                 return BadRequest("O ID na URL não corresponde ao ID do aluno no corpo da requisição.");
             }

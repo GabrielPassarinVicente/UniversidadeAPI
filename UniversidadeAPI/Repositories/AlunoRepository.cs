@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using UniversidadeAPI.Models;
-using Dapper
+using Dapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,8 +21,9 @@ namespace UniversidadeAPI.Repositories
 
         public async Task<IEnumerable<Aluno>> GetAll()
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
+            using (var conexao = _conectarBanco.CriarConexao())
             {
+
                 var sql = "SELECT * FROM Aluno";
 
                 return await conexao.QueryAsync<Aluno>(sql);
@@ -42,53 +43,109 @@ namespace UniversidadeAPI.Repositories
 
         public async Task<Aluno> Add(Aluno aluno)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
+            using (var conexao = _conectarBanco.CriarConexao())
             {
-                var sql = @"
-                    INSERT INTO Aluno (NomeCompleto, DataNascimento, Cpf, Endereco, Telefone, Email, DataMatricula)
-                    VALUES (@NomeCompleto, @DataNascimento, @Cpf, @Endereco, @Telefone, @Email, @DataMatricula);";
-                    
-                    
+                await conexao.OpenAsync();
+                using (IDbTransaction transaction = conexao.BeginTransaction())
+                {
+                    try
+                    {
+                        var sql = @"
+                    INSERT INTO Aluno (idAluno, Nome, Cpf, Matrículas_idMatrículas)
+                    VALUES (@idAluno, @Nome, @Cpf, @Matrículas_idMatrículas);";
+                 
+                        conexao.Execute(sql, new
+                        {
+                            aluno.IdAluno,
+                            aluno.Nome,
+                            aluno.Cpf,
+                            aluno.Matrículas_idMatrículas
+                        
+                        }, transaction: transaction);
+                        transaction.Commit();
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine($"Erro na transação: {ex.Message}");
+                        transaction.Rollback();
+                        throw;
+                    }
 
-                var newId = await conexao.ExecuteScalarAsync<int>(sql, aluno);
 
-                aluno.Id = newId;
-                return aluno;
+
+                    return aluno;
+
+
+                }
             }
         }
-
 
         public async Task<bool> Update(Aluno aluno)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
+             using (var conexao = _conectarBanco.CriarConexao())
             {
-                var sql = @"
+                await conexao.OpenAsync();
+                using (IDbTransaction transaction = conexao.BeginTransaction())
+                {
+                    try
+                    {
+                        var sql = @"
                     UPDATE Aluno SET 
-                        NomeCompleto = @NomeCompleto, 
-                        DataNascimento = @DataNascimento, 
-                        Cpf = @Cpf, 
-                        Endereco = @Endereco, 
-                        Telefone = @Telefone, 
-                        Email = @Email, 
-                        DataMatricula = @DataMatricula
-                    WHERE Id = @Id;";
+                        Nome = @Nome,
+                        Cpf = @Cpf,
+                        Matrículas_idMatrículas = @Matrículas_idMatrículas                 
+                    WHERE IdAluno = @IdAluno;";
 
-                var affectedRows = await conexao.ExecuteAsync(sql, aluno);
+                        conexao.Execute(sql, new
+                        {
+                            aluno.IdAluno,
+                            aluno.Nome,
+                            aluno.Cpf,
+                            aluno.Matrículas_idMatrículas
+                        }, transaction: transaction);
+                        transaction.Commit();
+                    }catch(Exception ex)
+                    {
+                        Console.WriteLine($"Erro na transação: {ex.Message}");
+                        transaction.Rollback();
+                        throw;
+                    }
 
-                return affectedRows > 0;
+                    return true;
+
+                }
+
+
+
             }
         }
 
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(int idAluno)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
+             using (var conexao = _conectarBanco.CriarConexao())
             {
-                var sql = "DELETE FROM Aluno WHERE Id = @Id;";
+                await conexao.OpenAsync();
+                using (IDbTransaction transaction = conexao.BeginTransaction())
+                {
+                    try
+                    {
+                       
+                         var sql = "ON DELETE CASCADE FROM Aluno WHERE IdAluno = @IdAluno;";
+                        conexao.Execute(sql, new { IdAluno = idAluno }, transaction: transaction);
 
-                var affectedRows = await conexao.ExecuteAsync(sql, new { Id = id });
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Erro na transação: {ex.Message}");
+                        transaction.Rollback();
+                        throw;
+                    }
 
-                return affectedRows > 0;
+
+                    return true;
+                }
             }
         }
     }
