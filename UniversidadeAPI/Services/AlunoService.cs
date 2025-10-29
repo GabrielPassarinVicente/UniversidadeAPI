@@ -28,7 +28,7 @@ namespace UniversidadeAPI.Services
 
         public async Task<Aluno> AddAluno(Aluno aluno)
         {
-            if (string.IsNullOrWhiteSpace(aluno.NomeCompleto) ||
+            if (string.IsNullOrWhiteSpace(aluno.Nome) ||
                 string.IsNullOrWhiteSpace(aluno.Cpf))
             {
                 throw new ArgumentException("Nome completo e CPF são obrigatórios.");
@@ -39,7 +39,7 @@ namespace UniversidadeAPI.Services
 
         public async Task<bool> UpdateAluno(Aluno aluno)
         {
-            if (string.IsNullOrWhiteSpace(aluno.NomeCompleto) ||
+            if (string.IsNullOrWhiteSpace(aluno.Nome) ||
                 string.IsNullOrWhiteSpace(aluno.Cpf))
             {
                 throw new ArgumentException("Nome completo e CPF são obrigatórios.");
