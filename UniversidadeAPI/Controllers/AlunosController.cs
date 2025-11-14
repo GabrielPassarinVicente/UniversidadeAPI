@@ -3,10 +3,12 @@ using UniversidadeAPI.Models;
 using UniversidadeAPI.Services;
 using System;
 using System.Collections.Generic; 
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UniversidadeAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AlunosController : ControllerBase

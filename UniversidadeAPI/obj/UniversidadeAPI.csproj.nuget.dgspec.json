@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj": {}
+    "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj": {
+    "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
         "projectName": "UniversidadeAPI",
-        "projectPath": "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
+        "projectPath": "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
         "packagesPath": "C:\\Users\\Gabriel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI\\Projetos Cursos\\UniversidadeAPI\\UniversidadeAPI\\obj\\",
+        "outputPath": "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -55,6 +54,10 @@
               "target": "Package",
               "version": "[2.1.66, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[9.4.0, )"
@@ -62,6 +65,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.14.0, )"
             }
           },
           "imports": [

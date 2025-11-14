@@ -1,0 +1,45 @@
+﻿using MySql.Data.MySqlClient;
+using UniversidadeAPI.Repositories;
+using UniversidadeAPI.Services; 
+
+namespace UniversidadeAPI
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+
+            builder.Services.AddScoped<ConectarBanco>();
+
+            builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
+            builder.Services.AddScoped<IAlunoService, AlunoService>();
+
+            builder.Services.AddScoped<ICursoRepository, CursoRepository>();
+            builder.Services.AddScoped<ICursoService, CursoService>();
+
+            builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
+            builder.Services.AddScoped<IProfessorService, ProfessorService>();
+
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseAuthorization();
+
+
+            app.MapControllers();
+
+            app.Run();
+        }
+    }
+}

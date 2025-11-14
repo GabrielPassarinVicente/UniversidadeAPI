@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Mysqlx.Crud;
 using System.Collections.Generic;
 using System.Linq; 
 using UniversidadeAPI.Models;
@@ -58,11 +59,11 @@ namespace UniversidadeAPI.Repositories
         {
             await using (var conexao = _conectarBanco.CriarConexao())
             {
-                var sql = @"
-                    UPDATE Cursos SET 
-                        Nome = @Nome, 
-                        CargaHoraria = @CargaHoraria, 
-                    WHERE IdCursos = @IdCursos;";
+                var sql = @"UPDATE Cursos
+SET Nome = @Nome, 
+    CargaHoraria = @CargaHoraria, 
+    Departamentos_idDepartamentos = @Departamentos_idDepartamentos
+WHERE IdCursos = @IdCursos";
 
                 var affectedRows = await conexao.ExecuteAsync(sql, curso);
 

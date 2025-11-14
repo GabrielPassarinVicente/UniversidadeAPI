@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using UniversidadeAPI.Models;
-using Dapper
+using Dapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
