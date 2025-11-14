@@ -14,6 +14,17 @@ namespace UniversidadeAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // ? CONFIGURAR CORS - DEVE VIR ANTES DE AddAuthentication
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
             // Configuração JWT
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
@@ -44,25 +55,20 @@ namespace UniversidadeAPI
             builder.Services.AddScoped<ICursoRepository, CursoRepository>();
             builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+            builder.Services.AddScoped<IDisciplinaRepository, DisciplinaRepository>();
 
             // Serviços
             builder.Services.AddScoped<IAlunoService, AlunoService>();
             builder.Services.AddScoped<ICursoService, CursoService>();
             builder.Services.AddScoped<IProfessorService, ProfessorService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IDepartamentoService, DepartamentoService>();
+            builder.Services.AddScoped<IDisciplinaService, DisciplinaService>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAngular", policy =>
-                {
-                    policy.WithOrigins("http://localhost:61771", "http://localhost:4200","http://localhost:63263")
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
-                });
-            });
-
+            
             // Configuração do Swagger com JWT
             builder.Services.AddSwaggerGen(options =>
             {
@@ -117,7 +123,9 @@ namespace UniversidadeAPI
                     options.DocumentTitle = "Universidade API - Swagger";
                 });
             }
-            app.UseCors("AllowAngular");
+
+            // ? USAR CORS - DEVE VIR ANTES DE UseAuthentication
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
             app.UseAuthorization();
