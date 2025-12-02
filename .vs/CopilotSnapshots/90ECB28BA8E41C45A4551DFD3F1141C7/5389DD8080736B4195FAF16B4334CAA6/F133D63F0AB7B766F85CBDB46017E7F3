@@ -1,0 +1,88 @@
+﻿### Registrar novo usuário
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123",
+  "email": "admin@universidade.com"
+}
+
+###
+
+### Login - Obter Token
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+###
+
+### Listar todos os alunos (SEM autenticação)
+GET http://localhost:5000/api/alunos
+
+###
+
+### Listar todos os alunos (COM autenticação)
+GET http://localhost:5000/api/alunos
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Buscar aluno por ID
+GET http://localhost:5000/api/alunos/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Adicionar novo aluno
+POST http://localhost:5000/api/alunos
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "nomeCompleto": "João Silva",
+  "dataNascimento": "2000-01-15",
+  "cpf": "12345678901",
+  "endereco": "Rua Teste, 123",
+  "telefone": "11999999999",
+  "email": "joao@email.com",
+  "dataMatricula": "2025-01-15"
+}
+
+###
+
+### Atualizar aluno
+PUT http://localhost:5000/api/alunos/1
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "id": 1,
+  "nomeCompleto": "João Silva Santos",
+  "dataNascimento": "2000-01-15",
+  "cpf": "12345678901",
+  "endereco": "Rua Nova, 456",
+  "telefone": "11988888888",
+  "email": "joao.santos@email.com",
+  "dataMatricula": "2025-01-15"
+}
+
+###
+
+### Deletar aluno
+DELETE http://localhost:5000/api/alunos/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Listar todos os cursos
+GET http://localhost:5000/api/cursos
+
+###
+
+### Listar todos os professores
+GET http://localhost:5000/api/professores

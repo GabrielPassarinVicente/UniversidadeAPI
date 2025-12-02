@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj": {}
+    "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI tecnologia\\Projeto Final\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj": {
+    "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI tecnologia\\Projeto Final\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI tecnologia\\Projeto Final\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
         "projectName": "UniversidadeAPI",
-        "projectPath": "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
+        "projectPath": "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI tecnologia\\Projeto Final\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
         "packagesPath": "C:\\Users\\Gabriel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\obj\\",
+        "outputPath": "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI tecnologia\\Projeto Final\\UniversidadeAPI\\UniversidadeAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -90,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

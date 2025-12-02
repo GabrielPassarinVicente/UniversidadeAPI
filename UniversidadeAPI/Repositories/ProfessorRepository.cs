@@ -30,9 +30,9 @@ namespace UniversidadeAPI.Repositories
         {
             await using (var conexao = _conectarBanco.CriarConexao())
             {
-                var sql = "SELECT * FROM Professores WHERE Id = @Id";
+                var sql = "SELECT * FROM Professores WHERE IdProfessores = @IdProfessores";
 
-                return await conexao.QueryFirstOrDefaultAsync<Professor>(sql, new { Id = id });
+                return await conexao.QueryFirstOrDefaultAsync<Professor>(sql, new { IdProfessores = id });
             }
         }
 
@@ -44,7 +44,8 @@ namespace UniversidadeAPI.Repositories
 
                 var sql = @"
                     INSERT INTO Professores (Nome)
-                    VALUES (@Nome);";
+                    VALUES (@Nome);
+                    SELECT LAST_INSERT_ID();";
                     
 
                 var newId = await conexao.ExecuteScalarAsync<int>(sql, professor);
@@ -62,7 +63,7 @@ namespace UniversidadeAPI.Repositories
                 var sql = @"
                     UPDATE Professores SET 
                         Nome = @Nome 
-                    WHERE Id = @Id;";
+                    WHERE IdProfessores = @IdProfessores;";
 
                 var affectedRows = await conexao.ExecuteAsync(sql, professor);
 
@@ -75,9 +76,9 @@ namespace UniversidadeAPI.Repositories
         {
             await using (var conexao = _conectarBanco.CriarConexao())
             {
-                var sql = "DELETE FROM Professores WHERE Id = @Id;";
+                var sql = "DELETE FROM Professores WHERE IdProfessores = @IdProfessores;";
 
-                var affectedRows = await conexao.ExecuteAsync(sql, new { Id = id });
+                var affectedRows = await conexao.ExecuteAsync(sql, new { IdProfessores = id });
 
                 return affectedRows > 0;
             }

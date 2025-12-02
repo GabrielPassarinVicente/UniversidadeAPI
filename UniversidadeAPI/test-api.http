@@ -1,3 +1,7 @@
+### ========================================
+### AUTENTICAÇÃO
+### ========================================
+
 ### Registrar novo usuário
 POST http://localhost:5000/api/auth/register
 Content-Type: application/json
@@ -21,12 +25,236 @@ Content-Type: application/json
 
 ###
 
-### Listar todos os alunos (SEM autenticação)
-GET http://localhost:5000/api/alunos
+### ========================================
+### DEPARTAMENTOS
+### ========================================
+
+### Listar todos os departamentos
+GET http://localhost:5000/api/departamentos
+Authorization: Bearer SEU_TOKEN_AQUI
 
 ###
 
-### Listar todos os alunos (COM autenticação)
+### Buscar departamento por ID
+GET http://localhost:5000/api/departamentos/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Adicionar novo departamento
+POST http://localhost:5000/api/departamentos
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "nome": "Departamento de Artes"
+}
+
+###
+
+### Atualizar departamento
+PUT http://localhost:5000/api/departamentos/1
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "idDepartamentos": 1,
+  "nome": "Ciências Exatas - Atualizado",
+  "codigo": "CEX",
+  "descricao": "Departamento atualizado"
+}
+
+###
+
+### Deletar departamento (CASCATA: deleta cursos, disciplinas, etc)
+DELETE http://localhost:5000/api/departamentos/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### ========================================
+### CURSOS
+### ========================================
+
+### Listar todos os cursos
+GET http://localhost:5000/api/cursos
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Buscar curso por ID
+GET http://localhost:5000/api/cursos/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Adicionar novo curso
+POST http://localhost:5000/api/cursos
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "nome": "Ciência de Dados",
+  "cargaHoraria": "2800h",
+  "departamentos_idDepartamentos": 2
+}
+
+###
+
+### Atualizar curso
+PUT http://localhost:5000/api/cursos/1
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "idCursos": 1,
+  "nome": "Ciência da Computação - Atualizado",
+  "cargaHoraria": "3400h",
+  "departamentos_idDepartamentos": 2
+}
+
+###
+
+### Deletar curso (CASCATA: deleta disciplinas e matrículas)
+DELETE http://localhost:5000/api/cursos/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### ========================================
+### PROFESSORES
+### ========================================
+
+### Listar todos os professores
+GET http://localhost:5000/api/professores
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Buscar professor por ID
+GET http://localhost:5000/api/professores/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Adicionar novo professor
+POST http://localhost:5000/api/professores
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "nome": "Prof. Ricardo Santos"
+}
+
+###
+
+### Atualizar professor
+PUT http://localhost:5000/api/professores/1
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "idProfessores": 1,
+  "nome": "Dr. João Silva - Atualizado"
+}
+
+###
+
+### Deletar professor (SET NULL nas disciplinas - não deleta disciplinas)
+DELETE http://localhost:5000/api/professores/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### ========================================
+### DISCIPLINAS / MATÉRIAS
+### ========================================
+
+### Listar todas as disciplinas
+GET http://localhost:5000/api/disciplinas
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Buscar disciplina por ID
+GET http://localhost:5000/api/disciplinas/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Listar disciplinas de um curso específico
+GET http://localhost:5000/api/disciplinas/curso/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Listar disciplinas de um professor específico
+GET http://localhost:5000/api/disciplinas/professor/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### Adicionar nova disciplina COM professor
+POST http://localhost:5000/api/disciplinas
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "nome": "Programação Orientada a Objetos",
+  "codigo": "CC201",
+  "cargaHoraria": 80,
+  "creditos": 4,
+  "ementa": "Conceitos de POO, classes, objetos, herança, polimorfismo",
+  "curso_IdCursos": 1,
+  "professor_IdProfessores": 1
+}
+
+###
+
+### Adicionar nova disciplina SEM professor (professor opcional)
+POST http://localhost:5000/api/disciplinas
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "nome": "Introdução à Computação",
+  "codigo": "CC101",
+  "cargaHoraria": 60,
+  "creditos": 3,
+  "curso_IdCursos": 1
+}
+
+###
+
+### Atualizar disciplina
+PUT http://localhost:5000/api/disciplinas/1
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "idDisciplina": 1,
+  "nome": "Algoritmos e Programação I - Atualizado",
+  "codigo": "CC101-NEW",
+  "cargaHoraria": 90,
+  "creditos": 5,
+  "ementa": "Ementa atualizada",
+  "curso_IdCursos": 1,
+  "professor_IdProfessores": 2
+}
+
+###
+
+### Deletar disciplina (CASCATA: deleta notas vinculadas)
+DELETE http://localhost:5000/api/disciplinas/1
+Authorization: Bearer SEU_TOKEN_AQUI
+
+###
+
+### ========================================
+### ALUNOS
+### ========================================
+
+### Listar todos os alunos
 GET http://localhost:5000/api/alunos
 Authorization: Bearer SEU_TOKEN_AQUI
 
@@ -73,16 +301,8 @@ Authorization: Bearer SEU_TOKEN_AQUI
 
 ###
 
-### Deletar aluno
+### Deletar aluno (CASCATA: deleta matrículas e notas)
 DELETE http://localhost:5000/api/alunos/1
 Authorization: Bearer SEU_TOKEN_AQUI
 
 ###
-
-### Listar todos os cursos
-GET http://localhost:5000/api/cursos
-
-###
-
-### Listar todos os professores
-GET http://localhost:5000/api/professores
