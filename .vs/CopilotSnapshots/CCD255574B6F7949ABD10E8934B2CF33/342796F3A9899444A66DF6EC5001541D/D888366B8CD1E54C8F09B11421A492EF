@@ -1,0 +1,378 @@
+﻿# CursoService.cs - Implementação Corrigida
+
+Use este código para corrigir seu `CursoService.cs`. Este código funciona com o controller que você compartilhou:
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
+using UniversidadeAPI.Models;
+
+namespace UniversidadeAPI.Services
+{
+    public interface ICursoService
+    {
+        Task<IEnumerable<CursoResponseComProfessores>> GetAllCursosWithProfessores();
+        Task<CursoResponseComProfessores?> GetCursoByIdWithProfessores(int id);
+        Task<CursoResponseComProfessores> AddCursoWithProfessores(CreateCursoRequest request);
+        Task<bool> UpdateCursoWithProfessores(UpdateCursoRequest request);
+        Task<bool> DeleteCurso(int id);
+    }
+
+    public class CursoService : ICursoService
+    {
+        private readonly string _connectionString;
+
+        public CursoService(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+
+        // GET ALL CURSOS WITH PROFESSORES
+        public async Task<IEnumerable<CursoResponseComProfessores>> GetAllCursosWithProfessores()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var sql = @"
+                    SELECT 
+                        c.IdCursos, 
+                        c.Nome, 
+                        c.CargaHoraria, 
+                        c.Departamentos_idDepartamentos,
+                        p.IdProfessores,
+                        p.Nome AS NomeProfessor
+                    FROM Curso c
+                    LEFT JOIN CursoProfessor cp ON c.IdCursos = cp.CursoId
+                    LEFT JOIN Professor p ON cp.ProfessorId = p.IdProfessores
+                    ORDER BY c.IdCursos";
+
+                var cursoDict = new Dictionary<int, CursoResponseComProfessores>();
+
+                var resultado = await connection.QueryAsync<dynamic>(sql);
+
+                foreach (var row in resultado)
+                {
+                    int cursoId = row.IdCursos;
+
+                    if (!cursoDict.ContainsKey(cursoId))
+                    {
+                        cursoDict[cursoId] = new CursoResponseComProfessores
+                        {
+                            IdCursos = cursoId,
+                            Nome = row.Nome,
+                            CargaHoraria = row.CargaHoraria,
+                            Departamentos_idDepartamentos = row.Departamentos_idDepartamentos,
+                            Professores = new List<int>()
+                        };
+                    }
+
+                    if (row.IdProfessores != null)
+                    {
+                        cursoDict[cursoId].Professores.Add((int)row.IdProfessores);
+                    }
+                }
+
+                return cursoDict.Values.ToList();
+            }
+        }
+
+        // GET CURSO BY ID WITH PROFESSORES
+        public async Task<CursoResponseComProfessores?> GetCursoByIdWithProfessores(int id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var sql = @"
+                    SELECT 
+                        c.IdCursos, 
+                        c.Nome, 
+                        c.CargaHoraria, 
+                        c.Departamentos_idDepartamentos,
+                        p.IdProfessores
+                    FROM Curso c
+                    LEFT JOIN CursoProfessor cp ON c.IdCursos = cp.CursoId
+                    LEFT JOIN Professor p ON cp.ProfessorId = p.IdProfessores
+                    WHERE c.IdCursos = @IdCursos";
+
+                var resultado = await connection.QueryAsync<dynamic>(sql, new { IdCursos = id });
+
+                if (!resultado.Any())
+                    return null;
+
+                var curso = new CursoResponseComProfessores
+                {
+                    IdCursos = resultado.First().IdCursos,
+                    Nome = resultado.First().Nome,
+                    CargaHoraria = resultado.First().CargaHoraria,
+                    Departamentos_idDepartamentos = resultado.First().Departamentos_idDepartamentos,
+                    Professores = new List<int>()
+                };
+
+                foreach (var row in resultado)
+                {
+                    if (row.IdProfessores != null)
+                    {
+                        curso.Professores.Add((int)row.IdProfessores);
+                    }
+                }
+
+                return curso;
+            }
+        }
+
+        // ADD CURSO WITH PROFESSORES
+        public async Task<CursoResponseComProfessores> AddCursoWithProfessores(CreateCursoRequest request)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Validar departamento
+                        var sqlValidarDepto = "SELECT COUNT(*) FROM Departamento WHERE IdDepartamento = @DeptId";
+                        var deptoExists = await connection.QuerySingleAsync<int>(sqlValidarDepto, 
+                            new { DeptId = request.Departamentos_idDepartamentos }, transaction);
+
+                        if (deptoExists == 0)
+                        {
+                            throw new ArgumentException("Departamento não encontrado.");
+                        }
+
+                        // 2. Validar professores
+                        if (request.Professores != null && request.Professores.Any())
+                        {
+                            var sqlValidarProfs = "SELECT COUNT(*) FROM Professor WHERE IdProfessores IN @ProfIds";
+                            var profsCount = await connection.QuerySingleAsync<int>(sqlValidarProfs,
+                                new { ProfIds = request.Professores }, transaction);
+
+                            if (profsCount != request.Professores.Count)
+                            {
+                                throw new ArgumentException("Um ou mais professores não foram encontrados.");
+                            }
+                        }
+
+                        // 3. Inserir curso
+                        var sqlCurso = @"
+                            INSERT INTO Curso (Nome, CargaHoraria, Departamentos_idDepartamentos)
+                            VALUES (@Nome, @CargaHoraria, @DeptId);
+                            SELECT CAST(SCOPE_IDENTITY() as int)";
+
+                        var cursoId = await connection.QuerySingleAsync<int>(sqlCurso,
+                            new
+                            {
+                                Nome = request.Nome,
+                                CargaHoraria = request.CargaHoraria,
+                                DeptId = request.Departamentos_idDepartamentos
+                            },
+                            transaction);
+
+                        // 4. Inserir professores
+                        if (request.Professores != null && request.Professores.Any())
+                        {
+                            var sqlProf = @"
+                                INSERT INTO CursoProfessor (CursoId, ProfessorId)
+                                VALUES (@CursoId, @ProfessorId)";
+
+                            foreach (var professorId in request.Professores)
+                            {
+                                await connection.ExecuteAsync(sqlProf,
+                                    new { CursoId = cursoId, ProfessorId = professorId },
+                                    transaction);
+                            }
+                        }
+
+                        transaction.Commit();
+
+                        // Retornar curso criado
+                        return await GetCursoByIdWithProfessores(cursoId);
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        // UPDATE CURSO WITH PROFESSORES
+        public async Task<bool> UpdateCursoWithProfessores(UpdateCursoRequest request)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Validar curso existe
+                        var sqlValidarCurso = "SELECT COUNT(*) FROM Curso WHERE IdCursos = @IdCursos";
+                        var cursoExists = await connection.QuerySingleAsync<int>(sqlValidarCurso,
+                            new { IdCursos = request.IdCursos }, transaction);
+
+                        if (cursoExists == 0)
+                        {
+                            return false;
+                        }
+
+                        // 2. Validar departamento
+                        var sqlValidarDepto = "SELECT COUNT(*) FROM Departamento WHERE IdDepartamento = @DeptId";
+                        var deptoExists = await connection.QuerySingleAsync<int>(sqlValidarDepto,
+                            new { DeptId = request.Departamentos_idDepartamentos }, transaction);
+
+                        if (deptoExists == 0)
+                        {
+                            throw new ArgumentException("Departamento não encontrado.");
+                        }
+
+                        // 3. Validar professores
+                        if (request.Professores != null && request.Professores.Any())
+                        {
+                            var sqlValidarProfs = "SELECT COUNT(*) FROM Professor WHERE IdProfessores IN @ProfIds";
+                            var profsCount = await connection.QuerySingleAsync<int>(sqlValidarProfs,
+                                new { ProfIds = request.Professores }, transaction);
+
+                            if (profsCount != request.Professores.Count)
+                            {
+                                throw new ArgumentException("Um ou mais professores não foram encontrados.");
+                            }
+                        }
+
+                        // 4. Atualizar curso
+                        var sqlUpdate = @"
+                            UPDATE Curso 
+                            SET Nome = @Nome, 
+                                CargaHoraria = @CargaHoraria, 
+                                Departamentos_idDepartamentos = @DeptId
+                            WHERE IdCursos = @IdCursos";
+
+                        await connection.ExecuteAsync(sqlUpdate,
+                            new
+                            {
+                                IdCursos = request.IdCursos,
+                                Nome = request.Nome,
+                                CargaHoraria = request.CargaHoraria,
+                                DeptId = request.Departamentos_idDepartamentos
+                            },
+                            transaction);
+
+                        // 5. Deletar professores antigos
+                        var sqlDeleteProfs = "DELETE FROM CursoProfessor WHERE CursoId = @CursoId";
+                        await connection.ExecuteAsync(sqlDeleteProfs,
+                            new { CursoId = request.IdCursos }, transaction);
+
+                        // 6. Inserir novos professores
+                        if (request.Professores != null && request.Professores.Any())
+                        {
+                            var sqlInsertProf = @"
+                                INSERT INTO CursoProfessor (CursoId, ProfessorId)
+                                VALUES (@CursoId, @ProfessorId)";
+
+                            foreach (var professorId in request.Professores)
+                            {
+                                await connection.ExecuteAsync(sqlInsertProf,
+                                    new { CursoId = request.IdCursos, ProfessorId = professorId },
+                                    transaction);
+                            }
+                        }
+
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        // DELETE CURSO
+        public async Task<bool> DeleteCurso(int id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Deletar professores vinculados
+                        var sqlDeleteProfs = "DELETE FROM CursoProfessor WHERE CursoId = @IdCursos";
+                        await connection.ExecuteAsync(sqlDeleteProfs,
+                            new { IdCursos = id }, transaction);
+
+                        // 2. Deletar curso
+                        var sqlDeleteCurso = "DELETE FROM Curso WHERE IdCursos = @IdCursos";
+                        var resultado = await connection.ExecuteAsync(sqlDeleteCurso,
+                            new { IdCursos = id }, transaction);
+
+                        transaction.Commit();
+                        return resultado > 0;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+## Modelos de Requisição/Resposta
+
+Se você não tiver esses DTOs, crie-os:
+
+```csharp
+// CreateCursoRequest.cs
+public class CreateCursoRequest
+{
+    public string Nome { get; set; }
+    public string CargaHoraria { get; set; }
+    public int Departamentos_idDepartamentos { get; set; }
+    public List<int> Professores { get; set; } = new();
+}
+
+// UpdateCursoRequest.cs
+public class UpdateCursoRequest
+{
+    public int IdCursos { get; set; }
+    public string Nome { get; set; }
+    public string CargaHoraria { get; set; }
+    public int Departamentos_idDepartamentos { get; set; }
+    public List<int> Professores { get; set; } = new();
+}
+
+// CursoResponseComProfessores.cs
+public class CursoResponseComProfessores
+{
+    public int IdCursos { get; set; }
+    public string Nome { get; set; }
+    public string CargaHoraria { get; set; }
+    public int Departamentos_idDepartamentos { get; set; }
+    public List<int> Professores { get; set; } = new();
+}
+```
+
+## Pontos-Chave da Correção
+
+1. ✅ **Usa `@IdCursos`** em vez de `@Id`
+2. ✅ **LEFT JOIN** para retornar cursos mesmo sem professores
+3. ✅ **Transações** em todas as operações
+4. ✅ **Validação** de departamento e professores antes de salvar
+5. ✅ **Delete cascata** dos professores ao deletar curso
+
+**Copie este código para seu `CursoService.cs` e teste novamente!**

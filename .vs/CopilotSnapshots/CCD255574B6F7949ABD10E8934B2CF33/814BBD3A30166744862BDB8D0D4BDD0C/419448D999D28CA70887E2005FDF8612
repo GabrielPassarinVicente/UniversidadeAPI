@@ -1,0 +1,85 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using UniversidadeAPI.Models;
+using UniversidadeAPI.Repositories;
+
+namespace UniversidadeAPI.Services
+{
+    public class ProfessorService : IProfessorService
+    {
+        private readonly IProfessorRepository _professorRepository;
+        private readonly IDisciplinaRepository _disciplinaRepository;
+        private readonly ICursoProfessorRepository _cursoProfessorRepository;
+
+        public ProfessorService(
+            IProfessorRepository professorRepository, 
+            IDisciplinaRepository disciplinaRepository,
+            ICursoProfessorRepository cursoProfessorRepository)
+        {
+            _professorRepository = professorRepository;
+            _disciplinaRepository = disciplinaRepository;
+            _cursoProfessorRepository = cursoProfessorRepository;
+        }
+
+        public async Task<IEnumerable<Professor>> GetAllProfessores()
+        {
+            return await _professorRepository.GetAll();
+        }
+
+        public async Task<Professor?> GetProfessorById(int id)
+        {
+            return await _professorRepository.GetById(id);
+        }
+
+        public async Task<Professor> AddProfessor(Professor professor)
+        {
+            if (string.IsNullOrWhiteSpace(professor.Nome))
+            {
+                throw new ArgumentException("Nome do professor é obrigatório.");
+            }
+
+            return await _professorRepository.Add(professor);
+        }
+
+        public async Task<bool> UpdateProfessor(Professor professor)
+        {
+            if (string.IsNullOrWhiteSpace(professor.Nome))
+            {
+                throw new ArgumentException("Nome do professor é obrigatório.");
+            }
+
+            return await _professorRepository.Update(professor);
+        }
+
+        public async Task<bool> DeleteProfessor(int id)
+        {
+            // 1. Remover vínculos com cursos (CursoProfessor) - CASCADE
+            await RemoveAllCursosFromProfessor(id);
+
+            // 2. Atualizar disciplinas vinculadas (setar professor = NULL ao invés de deletar a disciplina)
+            var disciplinasVinculadas = await _disciplinaRepository.GetByProfessor(id);
+            foreach (var disciplina in disciplinasVinculadas)
+            {
+                disciplina.Professor_IdProfessores = null;
+                await _disciplinaRepository.Update(disciplina);
+            }
+
+            // 3. Deletar o professor
+            return await _professorRepository.Delete(id);
+        }
+
+        private async Task RemoveAllCursosFromProfessor(int professorId)
+        {
+            // Buscar todos os cursos vinculados ao professor
+            var cursos = await _cursoProfessorRepository.GetCursosByProfessorId(professorId);
+            
+            // Remover cada vínculo
+            foreach (var curso in cursos)
+            {
+                await _cursoProfessorRepository.RemoveCursoProfessor(curso.IdCursos, professorId);
+            }
+        }
+    }
+}

@@ -1,0 +1,85 @@
+### Teste de Criação de Curso com Professores
+POST http://localhost:5000/api/cursos
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "nome": "Ciência da Computação",
+  "cargaHoraria": "3600h",
+  "departamentos_idDepartamentos": 1,
+  "professores": [1, 2, 3]
+}
+
+###
+
+### Teste de Obtenção de Curso com Professores
+GET http://localhost:5000/api/cursos/1
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+### Teste de Obtenção de Todos os Cursos com Professores
+GET http://localhost:5000/api/cursos
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+### Teste de Atualização de Curso com Professores
+PUT http://localhost:5000/api/cursos/1
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "idCursos": 1,
+  "nome": "Ciência da Computação",
+  "cargaHoraria": "3600h",
+  "departamentos_idDepartamentos": 1,
+  "professores": [1, 2]
+}
+
+###
+
+### Teste de Deleção de Curso
+DELETE http://localhost:5000/api/cursos/1
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+### Teste: Criação com Professor Inválido (deve retornar 400)
+POST http://localhost:5000/api/cursos
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "nome": "Engenharia de Software",
+  "cargaHoraria": "4000h",
+  "departamentos_idDepartamentos": 1,
+  "professores": [999]
+}
+
+###
+
+### Teste: Criação sem Nome (deve retornar 400)
+POST http://localhost:5000/api/cursos
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "cargaHoraria": "4000h",
+  "departamentos_idDepartamentos": 1,
+  "professores": [1]
+}
+
+###
+
+### Teste: Criação com Lista Vazia de Professores (deve funcionar)
+POST http://localhost:5000/api/cursos
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "nome": "Análise de Dados",
+  "cargaHoraria": "2400h",
+  "departamentos_idDepartamentos": 1,
+  "professores": []
+}
