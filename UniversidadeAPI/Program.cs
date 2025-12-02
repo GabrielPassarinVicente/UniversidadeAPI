@@ -53,6 +53,7 @@ namespace UniversidadeAPI
             // Repositórios
             builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
             builder.Services.AddScoped<ICursoRepository, CursoRepository>();
+            builder.Services.AddScoped<ICursoProfessorRepository, CursoProfessorRepository>();
             builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();

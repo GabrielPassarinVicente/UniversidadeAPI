@@ -7,9 +7,13 @@ namespace UniversidadeAPI.Services
     public interface ICursoService
     {
         Task<IEnumerable<Curso>> GetAllCursos();
+        Task<IEnumerable<CursoResponseComProfessores>> GetAllCursosWithProfessores();
         Task<Curso> GetCursoById(int id);
+        Task<CursoResponseComProfessores> GetCursoByIdWithProfessores(int id);
         Task<Curso> AddCurso(Curso curso);
+        Task<CursoResponseComProfessores> AddCursoWithProfessores(CreateCursoRequest request);
         Task<bool> UpdateCurso(Curso curso);
+        Task<bool> UpdateCursoWithProfessores(UpdateCursoRequest request);
         Task<bool> DeleteCurso(int id);
     }
 }

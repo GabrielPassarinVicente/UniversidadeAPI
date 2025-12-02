@@ -21,16 +21,16 @@ namespace UniversidadeAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Aluno>>> GetCursos()
+        public async Task<ActionResult<IEnumerable<CursoResponseComProfessores>>> GetCursos()
         {
-            var cursos = await _cursoService.GetAllCursos();
+            var cursos = await _cursoService.GetAllCursosWithProfessores();
             return Ok(cursos);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Curso>> GetCurso(int id)
+        public async Task<ActionResult<CursoResponseComProfessores>> GetCurso(int id)
         {
-            var curso = await _cursoService.GetCursoById(id);
+            var curso = await _cursoService.GetCursoByIdWithProfessores(id);
 
             if (curso == null)
             {
@@ -40,55 +40,69 @@ namespace UniversidadeAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Aluno>> PostCurso(Curso curso)
+        public async Task<ActionResult<CursoResponseComProfessores>> PostCurso(CreateCursoRequest request)
         {
             try
             {
-                var newCurso = await _cursoService.AddCurso(curso);
-
+                var newCurso = await _cursoService.AddCursoWithProfessores(request);
                 return CreatedAtAction(nameof(GetCurso), new { id = newCurso.IdCursos }, newCurso);
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Erro ao criar curso", details = ex.Message });
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurso(int id, Curso curso)
+        public async Task<IActionResult> PutCurso(int id, UpdateCursoRequest request)
         {
-            if (id != curso.IdCursos)
+            if (id != request.IdCursos)
             {
-                return BadRequest("O ID na URL não corresponde ao ID do curso no corpo da requisição.");
+                return BadRequest(new { message = "O ID na URL não corresponde ao ID do curso no corpo da requisição." });
             }
 
             try
             {
-                
-                var updated = await _cursoService.UpdateCurso(curso);
+                var updated = await _cursoService.UpdateCursoWithProfessores(request);
 
                 if (updated)
                 {
-                    return NoContent();
+                    var cursoAtualizado = await _cursoService.GetCursoByIdWithProfessores(id);
+                    return Ok(cursoAtualizado);
                 }
 
-                return NotFound();
+                return NotFound(new { message = "Curso não encontrado." });
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Erro ao atualizar curso", details = ex.Message });
             }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCurso(int id)
         {
-            if (await _cursoService.DeleteCurso(id))
+            try
             {
-                return NoContent();
-            }
+                if (await _cursoService.DeleteCurso(id))
+                {
+                    return NoContent();
+                }
 
-            return NotFound();
+                return NotFound(new { message = "Curso não encontrado." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Erro ao deletar curso", details = ex.Message });
+            }
         }
     }
 }

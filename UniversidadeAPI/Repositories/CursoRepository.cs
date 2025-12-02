@@ -27,8 +27,66 @@ namespace UniversidadeAPI.Repositories
         {
             await using (var conexao = _conectarBanco.CriarConexao())
             {
-                var sql = "SELECT * FROM Cursos WHERE IdCursos = @Id";
-                return await conexao.QueryFirstOrDefaultAsync<Curso>(sql, new { Id = id });
+                var sql = "SELECT * FROM Cursos WHERE IdCursos = @IdCursos";
+                return await conexao.QueryFirstOrDefaultAsync<Curso>(sql, new { IdCursos = id });
+            }
+        }
+
+        public async Task<Curso> GetByIdWithProfessores(int id)
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                var sql = @"
+                    SELECT DISTINCT c.IdCursos, c.Nome, c.CargaHoraria, c.Departamentos_idDepartamentos
+                    FROM Cursos c
+                    LEFT JOIN CursoProfessor cp ON c.IdCursos = cp.Cursos_IdCursos
+                    WHERE c.IdCursos = @IdCursos";
+
+                var curso = await conexao.QueryFirstOrDefaultAsync<Curso>(sql, new { IdCursos = id });
+
+                if (curso != null)
+                {
+                    var sqlProfessores = @"
+                        SELECT p.IdProfessores, p.Nome
+                        FROM Professores p
+                        INNER JOIN CursoProfessor cp ON p.IdProfessores = cp.Professores_IdProfessores
+                        WHERE cp.Cursos_IdCursos = @CursoId
+                        ORDER BY p.Nome";
+
+                    var professores = await conexao.QueryAsync<Professor>(sqlProfessores, new { CursoId = id });
+                    curso.Professores = professores.ToList();
+                }
+
+                return curso;
+            }
+        }
+
+        public async Task<IEnumerable<Curso>> GetAllWithProfessores()
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                var sql = @"
+                    SELECT DISTINCT c.IdCursos, c.Nome, c.CargaHoraria, c.Departamentos_idDepartamentos
+                    FROM Cursos c
+                    LEFT JOIN CursoProfessor cp ON c.IdCursos = cp.Cursos_IdCursos
+                    ORDER BY c.Nome";
+
+                var cursos = await conexao.QueryAsync<Curso>(sql);
+
+                foreach (var curso in cursos)
+                {
+                    var sqlProfessores = @"
+                        SELECT p.IdProfessores, p.Nome
+                        FROM Professores p
+                        INNER JOIN CursoProfessor cp ON p.IdProfessores = cp.Professores_IdProfessores
+                        WHERE cp.Cursos_IdCursos = @CursoId
+                        ORDER BY p.Nome";
+
+                    var professores = await conexao.QueryAsync<Professor>(sqlProfessores, new { CursoId = curso.IdCursos });
+                    curso.Professores = professores.ToList();
+                }
+
+                return cursos;
             }
         }
 
@@ -67,8 +125,8 @@ namespace UniversidadeAPI.Repositories
         {
             await using (var conexao = _conectarBanco.CriarConexao())
             {
-                var sql = "DELETE FROM Cursos WHERE IdCursos = @Id;";
-                var affectedRows = await conexao.ExecuteAsync(sql, new { Id = id });
+                var sql = "DELETE FROM Cursos WHERE IdCursos = @IdCursos;";
+                var affectedRows = await conexao.ExecuteAsync(sql, new { IdCursos = id });
                 return affectedRows > 0;
             }
         }

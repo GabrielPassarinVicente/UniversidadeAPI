@@ -12,7 +12,9 @@ namespace UniversidadeAPI.Services
         private readonly IProfessorRepository _professorRepository;
         private readonly IDisciplinaRepository _disciplinaRepository;
 
-        public ProfessorService(IProfessorRepository professorRepository, IDisciplinaRepository disciplinaRepository)
+        public ProfessorService(
+            IProfessorRepository professorRepository, 
+            IDisciplinaRepository disciplinaRepository)
         {
             _professorRepository = professorRepository;
             _disciplinaRepository = disciplinaRepository;
@@ -50,13 +52,10 @@ namespace UniversidadeAPI.Services
 
         public async Task<bool> DeleteProfessor(int id)
         {
-            // Verificar se o professor está vinculado a disciplinas
-            var disciplinasVinculadas = await _disciplinaRepository.GetByProfessor(id);
-            if (disciplinasVinculadas.Any())
-            {
-                throw new InvalidOperationException("Não é possível deletar este professor pois ele está vinculado a disciplinas. Remova os vínculos primeiro.");
-            }
-
+            // Deletar professor diretamente
+            // O CASCADE DELETE no banco vai cuidar dos vínculos automaticamente:
+            // - CursoProfessor: DELETE CASCADE (remove vínculos)
+            // - Disciplina: SET NULL (mantém disciplina, remove professor)
             return await _professorRepository.Delete(id);
         }
     }

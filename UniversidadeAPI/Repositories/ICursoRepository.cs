@@ -8,6 +8,8 @@ namespace UniversidadeAPI.Repositories
     {
         Task<IEnumerable<Curso>> GetAll();
         Task<Curso> GetById(int id);
+        Task<Curso> GetByIdWithProfessores(int id);
+        Task<IEnumerable<Curso>> GetAllWithProfessores();
         Task<Curso> Add(Curso curso);
         Task<bool> Update(Curso curso);
         Task<bool> Delete(int id);

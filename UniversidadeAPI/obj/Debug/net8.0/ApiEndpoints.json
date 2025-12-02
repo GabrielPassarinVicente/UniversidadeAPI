@@ -170,7 +170,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[UniversidadeAPI.Models.Aluno, UniversidadeAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[UniversidadeAPI.Models.CursoResponseComProfessores, UniversidadeAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -189,14 +189,14 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "curso",
-        "Type": "UniversidadeAPI.Models.Curso",
+        "Name": "request",
+        "Type": "UniversidadeAPI.Models.CreateCursoRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "UniversidadeAPI.Models.Aluno",
+        "Type": "UniversidadeAPI.Models.CursoResponseComProfessores",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -222,7 +222,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "UniversidadeAPI.Models.Curso",
+        "Type": "UniversidadeAPI.Models.CursoResponseComProfessores",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -246,8 +246,8 @@
         "IsRequired": true
       },
       {
-        "Name": "curso",
-        "Type": "UniversidadeAPI.Models.Curso",
+        "Name": "request",
+        "Type": "UniversidadeAPI.Models.UpdateCursoRequest",
         "IsRequired": true
       }
     ],
