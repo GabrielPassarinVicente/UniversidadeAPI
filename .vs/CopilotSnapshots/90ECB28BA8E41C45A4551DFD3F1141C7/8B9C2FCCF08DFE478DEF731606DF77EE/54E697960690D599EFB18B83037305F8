@@ -1,0 +1,127 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using UniversidadeAPI.Models;
+using UniversidadeAPI.Services;
+
+namespace UniversidadeAPI.Controllers
+{
+    [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class DisciplinasController : ControllerBase
+    {
+        private readonly IDisciplinaService _disciplinaService;
+
+        public DisciplinasController(IDisciplinaService disciplinaService)
+        {
+            _disciplinaService = disciplinaService;
+        }
+
+        /// <summary>
+        /// Listar todas as disciplinas
+        /// </summary>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Disciplina>>> GetAllDisciplinas()
+        {
+            var disciplinas = await _disciplinaService.GetAllDisciplinas();
+            return Ok(disciplinas);
+        }
+
+        /// <summary>
+        /// Buscar disciplina por ID
+        /// </summary>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Disciplina>> GetDisciplinaById(int id)
+        {
+            var disciplina = await _disciplinaService.GetDisciplinaById(id);
+
+            if (disciplina == null)
+            {
+                return NotFound(new { message = $"Disciplina com ID {id} não encontrada." });
+            }
+
+            return Ok(disciplina);
+        }
+
+        /// <summary>
+        /// Listar disciplinas por curso
+        /// </summary>
+        [HttpGet("curso/{cursoId}")]
+        public async Task<ActionResult<IEnumerable<Disciplina>>> GetDisciplinasByCurso(int cursoId)
+        {
+            var disciplinas = await _disciplinaService.GetDisciplinasByCurso(cursoId);
+            return Ok(disciplinas);
+        }
+
+        /// <summary>
+        /// Listar disciplinas por professor
+        /// </summary>
+        [HttpGet("professor/{professorId}")]
+        public async Task<ActionResult<IEnumerable<Disciplina>>> GetDisciplinasByProfessor(int professorId)
+        {
+            var disciplinas = await _disciplinaService.GetDisciplinasByProfessor(professorId);
+            return Ok(disciplinas);
+        }
+
+        /// <summary>
+        /// Adicionar nova disciplina
+        /// </summary>
+        [HttpPost]
+        public async Task<ActionResult<Disciplina>> AddDisciplina([FromBody] Disciplina disciplina)
+        {
+            try
+            {
+                var newDisciplina = await _disciplinaService.AddDisciplina(disciplina);
+                return CreatedAtAction(nameof(GetDisciplinaById), new { id = newDisciplina.IdDisciplina }, newDisciplina);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Atualizar disciplina existente
+        /// </summary>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateDisciplina(int id, [FromBody] Disciplina disciplina)
+        {
+            if (id != disciplina.IdDisciplina)
+            {
+                return BadRequest(new { message = "O ID na URL não corresponde ao ID da disciplina no corpo da requisição." });
+            }
+
+            try
+            {
+                var updated = await _disciplinaService.UpdateDisciplina(disciplina);
+
+                if (updated)
+                {
+                    return NoContent();
+                }
+
+                return NotFound(new { message = $"Disciplina com ID {id} não encontrada." });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Deletar disciplina (exclusão em cascata configurada no banco)
+        /// </summary>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteDisciplina(int id)
+        {
+            var deleted = await _disciplinaService.DeleteDisciplina(id);
+
+            if (deleted)
+            {
+                return NoContent();
+            }
+
+            return NotFound(new { message = $"Disciplina com ID {id} não encontrada." });
+        }
+    }
+}

@@ -1,0 +1,190 @@
+﻿using Dapper;
+using UniversidadeAPI.Models;
+
+namespace UniversidadeAPI.Repositories
+{
+    public class DisciplinaRepository : IDisciplinaRepository
+    {
+        private readonly ConectarBanco _conectarBanco;
+
+        public DisciplinaRepository(ConectarBanco conectarBanco)
+        {
+            _conectarBanco = conectarBanco;
+        }
+
+        public async Task<IEnumerable<Disciplina>> GetAll()
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                var sql = @"
+                    SELECT 
+                        d.*,
+                        c.IdCursos, c.Nome AS CursoNome, c.CargaHoraria AS CursoCargaHoraria,
+                        p.IdProfessores, p.Nome AS ProfessorNome
+                    FROM Disciplinas d
+                    LEFT JOIN Cursos c ON d.Curso_IdCursos = c.IdCursos
+                    LEFT JOIN Professores p ON d.Professor_IdProfessores = p.IdProfessores";
+
+                var disciplinas = await conexao.QueryAsync<Disciplina, Curso, Professor, Disciplina>(
+                    sql,
+                    (disciplina, curso, professor) =>
+                    {
+                        disciplina.Curso = curso;
+                        disciplina.Professor = professor;
+                        return disciplina;
+                    },
+                    splitOn: "IdCursos,IdProfessores"
+                );
+
+                return disciplinas;
+            }
+        }
+
+        public async Task<Disciplina> GetById(int id)
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                var sql = @"
+                    SELECT 
+                        d.*,
+                        c.IdCursos, c.Nome AS CursoNome, c.CargaHoraria AS CursoCargaHoraria,
+                        p.IdProfessores, p.Nome AS ProfessorNome
+                    FROM Disciplinas d
+                    LEFT JOIN Cursos c ON d.Curso_IdCursos = c.IdCursos
+                    LEFT JOIN Professores p ON d.Professor_IdProfessores = p.IdProfessores
+                    WHERE d.IdDisciplina = @Id";
+
+                var disciplinas = await conexao.QueryAsync<Disciplina, Curso, Professor, Disciplina>(
+                    sql,
+                    (disciplina, curso, professor) =>
+                    {
+                        disciplina.Curso = curso;
+                        disciplina.Professor = professor;
+                        return disciplina;
+                    },
+                    new { Id = id },
+                    splitOn: "IdCursos,IdProfessores"
+                );
+
+                return disciplinas.FirstOrDefault();
+            }
+        }
+
+        public async Task<IEnumerable<Disciplina>> GetByCurso(int cursoId)
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                var sql = @"
+                    SELECT 
+                        d.*,
+                        c.IdCursos, c.Nome AS CursoNome,
+                        p.IdProfessores, p.Nome AS ProfessorNome
+                    FROM Disciplinas d
+                    LEFT JOIN Cursos c ON d.Curso_IdCursos = c.IdCursos
+                    LEFT JOIN Professores p ON d.Professor_IdProfessores = p.IdProfessores
+                    WHERE d.Curso_IdCursos = @CursoId";
+
+                var disciplinas = await conexao.QueryAsync<Disciplina, Curso, Professor, Disciplina>(
+                    sql,
+                    (disciplina, curso, professor) =>
+                    {
+                        disciplina.Curso = curso;
+                        disciplina.Professor = professor;
+                        return disciplina;
+                    },
+                    new { CursoId = cursoId },
+                    splitOn: "IdCursos,IdProfessores"
+                );
+
+                return disciplinas;
+            }
+        }
+
+        public async Task<IEnumerable<Disciplina>> GetByProfessor(int professorId)
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                var sql = @"
+                    SELECT 
+                        d.*,
+                        c.IdCursos, c.Nome AS CursoNome,
+                        p.IdProfessores, p.Nome AS ProfessorNome
+                    FROM Disciplinas d
+                    LEFT JOIN Cursos c ON d.Curso_IdCursos = c.IdCursos
+                    LEFT JOIN Professores p ON d.Professor_IdProfessores = p.IdProfessores
+                    WHERE d.Professor_IdProfessores = @ProfessorId";
+
+                var disciplinas = await conexao.QueryAsync<Disciplina, Curso, Professor, Disciplina>(
+                    sql,
+                    (disciplina, curso, professor) =>
+                    {
+                        disciplina.Curso = curso;
+                        disciplina.Professor = professor;
+                        return disciplina;
+                    },
+                    new { ProfessorId = professorId },
+                    splitOn: "IdCursos,IdProfessores"
+                );
+
+                return disciplinas;
+            }
+        }
+
+        public async Task<Disciplina> Add(Disciplina disciplina)
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                var sql = @"
+                    INSERT INTO Disciplinas (Nome, Codigo, CargaHoraria, Creditos, Ementa, Curso_IdCursos, Professor_IdProfessores)
+                    VALUES (@Nome, @Codigo, @CargaHoraria, @Creditos, @Ementa, @Curso_IdCursos, @Professor_IdProfessores);
+                    SELECT LAST_INSERT_ID();";
+
+                var newId = await conexao.ExecuteScalarAsync<int>(sql, disciplina);
+                disciplina.IdDisciplina = newId;
+                return disciplina;
+            }
+        }
+
+        public async Task<bool> Update(Disciplina disciplina)
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                var sql = @"
+                    UPDATE Disciplinas SET 
+                        Nome = @Nome, 
+                        Codigo = @Codigo, 
+                        CargaHoraria = @CargaHoraria,
+                        Creditos = @Creditos,
+                        Ementa = @Ementa,
+                        Curso_IdCursos = @Curso_IdCursos,
+                        Professor_IdProfessores = @Professor_IdProfessores
+                    WHERE IdDisciplina = @IdDisciplina;";
+
+                var affectedRows = await conexao.ExecuteAsync(sql, disciplina);
+                return affectedRows > 0;
+            }
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                // A exclusão em cascata já está configurada no banco de dados
+                // então podemos excluir diretamente sem verificar dependências
+                var sql = "DELETE FROM Disciplinas WHERE IdDisciplina = @Id;";
+                var affectedRows = await conexao.ExecuteAsync(sql, new { Id = id });
+                return affectedRows > 0;
+            }
+        }
+
+        public async Task<bool> CodigoExists(string codigo)
+        {
+            await using (var conexao = _conectarBanco.CriarConexao())
+            {
+                var sql = "SELECT COUNT(*) FROM Disciplinas WHERE Codigo = @Codigo";
+                var count = await conexao.ExecuteScalarAsync<int>(sql, new { Codigo = codigo });
+                return count > 0;
+            }
+        }
+    }
+}

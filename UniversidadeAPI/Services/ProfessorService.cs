@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UniversidadeAPI.Models;
 using UniversidadeAPI.Repositories;
@@ -9,12 +10,15 @@ namespace UniversidadeAPI.Services
     public class ProfessorService : IProfessorService
     {
         private readonly IProfessorRepository _professorRepository;
+        private readonly IDisciplinaRepository _disciplinaRepository;
 
-        public ProfessorService(IProfessorRepository professorRepository)
+        public ProfessorService(
+            IProfessorRepository professorRepository, 
+            IDisciplinaRepository disciplinaRepository)
         {
             _professorRepository = professorRepository;
+            _disciplinaRepository = disciplinaRepository;
         }
-
 
         public async Task<IEnumerable<Professor>> GetAllProfessores()
         {
@@ -48,6 +52,10 @@ namespace UniversidadeAPI.Services
 
         public async Task<bool> DeleteProfessor(int id)
         {
+            // Deletar professor diretamente
+            // O CASCADE DELETE no banco vai cuidar dos vínculos automaticamente:
+            // - CursoProfessor: DELETE CASCADE (remove vínculos)
+            // - Disciplina: SET NULL (mantém disciplina, remove professor)
             return await _professorRepository.Delete(id);
         }
     }

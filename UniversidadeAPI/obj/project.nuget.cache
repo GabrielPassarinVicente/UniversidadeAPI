@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mQgb9iPbRQs=",
+  "dgSpecHash": "M1pqhXZLBp0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Gabriel\\Desktop\\Curso FTI\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
+  "projectFilePath": "C:\\Users\\Gabriel\\OneDrive\\Área de Trabalho\\FTI tecnologia\\Projeto Final\\UniversidadeAPI\\UniversidadeAPI\\UniversidadeAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Gabriel\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\Gabriel\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",

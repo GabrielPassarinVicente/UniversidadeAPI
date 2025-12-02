@@ -1,0 +1,154 @@
+﻿using UniversidadeAPI.Models;
+using UniversidadeAPI.Repositories;
+using Microsoft.Extensions.Logging;
+
+namespace UniversidadeAPI.Services
+{
+    public class DisciplinaService : IDisciplinaService
+    {
+        private readonly IDisciplinaRepository _disciplinaRepository;
+        private readonly ICursoRepository _cursoRepository;
+        private readonly IProfessorRepository _professorRepository;
+        private readonly ILogger<DisciplinaService> _logger;
+
+        public DisciplinaService(
+            IDisciplinaRepository disciplinaRepository,
+            ICursoRepository cursoRepository,
+            IProfessorRepository professorRepository,
+            ILogger<DisciplinaService> logger)
+        {
+            _disciplinaRepository = disciplinaRepository;
+            _cursoRepository = cursoRepository;
+            _professorRepository = professorRepository;
+            _logger = logger;
+        }
+
+        public async Task<IEnumerable<Disciplina>> GetAllDisciplinas()
+        {
+            return await _disciplinaRepository.GetAll();
+        }
+
+        public async Task<Disciplina> GetDisciplinaById(int id)
+        {
+            return await _disciplinaRepository.GetById(id);
+        }
+
+        public async Task<IEnumerable<Disciplina>> GetDisciplinasByCurso(int cursoId)
+        {
+            return await _disciplinaRepository.GetByCurso(cursoId);
+        }
+
+        public async Task<IEnumerable<Disciplina>> GetDisciplinasByProfessor(int professorId)
+        {
+            return await _disciplinaRepository.GetByProfessor(professorId);
+        }
+
+        public async Task<Disciplina> AddDisciplina(Disciplina disciplina)
+        {
+            _logger.LogInformation("Recebendo dados para criar disciplina: {@Disciplina}", disciplina);
+
+            // Validações
+            if (string.IsNullOrWhiteSpace(disciplina.Nome))
+            {
+                throw new ArgumentException("Nome da disciplina é obrigatório.");
+            }
+
+            if (disciplina.CargaHoraria <= 0)
+            {
+                throw new ArgumentException("Carga horária deve ser maior que zero.");
+            }
+
+            if (disciplina.Curso_IdCursos <= 0)
+            {
+                throw new ArgumentException("Curso ID deve ser maior que zero.");
+            }
+
+            // Verificar se o curso existe
+            var curso = await _cursoRepository.GetById(disciplina.Curso_IdCursos);
+            if (curso == null)
+            {
+                throw new ArgumentException($"Curso com ID {disciplina.Curso_IdCursos} não encontrado.");
+            }
+
+            // Verificar se o professor existe (se fornecido)
+            if (disciplina.Professor_IdProfessores.HasValue && disciplina.Professor_IdProfessores.Value > 0)
+            {
+                var professor = await _professorRepository.GetById(disciplina.Professor_IdProfessores.Value);
+                if (professor == null)
+                {
+                    throw new ArgumentException($"Professor com ID {disciplina.Professor_IdProfessores.Value} não encontrado.");
+                }
+            }
+
+            // Verificar código único se fornecido
+            if (!string.IsNullOrWhiteSpace(disciplina.Codigo))
+            {
+                if (await _disciplinaRepository.CodigoExists(disciplina.Codigo))
+                {
+                    throw new ArgumentException($"Código '{disciplina.Codigo}' já está em uso.");
+                }
+            }
+
+            disciplina.DataCriacao = DateTime.UtcNow;
+            _logger.LogInformation("Criando disciplina: {@Disciplina}", disciplina);
+            return await _disciplinaRepository.Add(disciplina);
+        }
+
+        public async Task<bool> UpdateDisciplina(Disciplina disciplina)
+        {
+            _logger.LogInformation("Recebendo dados para atualizar disciplina: {@Disciplina}", disciplina);
+
+            // Validações
+            if (string.IsNullOrWhiteSpace(disciplina.Nome))
+            {
+                throw new ArgumentException("Nome da disciplina é obrigatório.");
+            }
+
+            if (disciplina.CargaHoraria <= 0)
+            {
+                throw new ArgumentException("Carga horária deve ser maior que zero.");
+            }
+
+            if (disciplina.Curso_IdCursos <= 0)
+            {
+                throw new ArgumentException("Curso ID deve ser maior que zero.");
+            }
+
+            // Verificar se a disciplina existe
+            var existingDisciplina = await _disciplinaRepository.GetById(disciplina.IdDisciplina);
+            if (existingDisciplina == null)
+            {
+                throw new ArgumentException($"Disciplina com ID {disciplina.IdDisciplina} não encontrada.");
+            }
+
+            // Verificar se o curso existe
+            var curso = await _cursoRepository.GetById(disciplina.Curso_IdCursos);
+            if (curso == null)
+            {
+                throw new ArgumentException($"Curso com ID {disciplina.Curso_IdCursos} não encontrado.");
+            }
+
+            // Verificar se o professor existe (se fornecido)
+            if (disciplina.Professor_IdProfessores.HasValue && disciplina.Professor_IdProfessores.Value > 0)
+            {
+                var professor = await _professorRepository.GetById(disciplina.Professor_IdProfessores.Value);
+                if (professor == null)
+                {
+                    throw new ArgumentException($"Professor com ID {disciplina.Professor_IdProfessores.Value} não encontrado.");
+                }
+            }
+
+            _logger.LogInformation("Atualizando disciplina: {@Disciplina}", disciplina);
+            return await _disciplinaRepository.Update(disciplina);
+        }
+
+        public async Task<bool> DeleteDisciplina(int id)
+        {
+            _logger.LogInformation("Recebendo solicitação para deletar disciplina com ID: {Id}", id);
+
+            // A exclusão em cascata já está configurada no banco de dados
+            // Então podemos excluir diretamente sem verificar dependências
+            return await _disciplinaRepository.Delete(id);
+        }
+    }
+}
