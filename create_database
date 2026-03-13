@@ -1,0 +1,171 @@
+DROP DATABASE IF EXISTS mydb;
+CREATE DATABASE mydb;
+GO
+USE mydb;
+GO
+
+CREATE TABLE Departamentos (
+  idDepartamentos INT IDENTITY(1,1) PRIMARY KEY,
+  Nome VARCHAR(100) NOT NULL,
+  Codigo VARCHAR(20) NULL,
+  Descricao VARCHAR(MAX) NULL,
+  DataCriacao DATETIME2 DEFAULT (GETDATE())
+);
+
+CREATE UNIQUE INDEX IX_Departamentos_Codigo ON Departamentos(Codigo) WHERE Codigo IS NOT NULL;
+CREATE INDEX IX_Departamentos_Nome ON Departamentos(Nome);
+
+CREATE TABLE [Usuario] (
+  Id INT IDENTITY(1,1) PRIMARY KEY,
+  Username VARCHAR(50) NOT NULL,
+  PasswordHash VARCHAR(255) NOT NULL,
+  Email VARCHAR(100) NOT NULL,
+  DataCriacao DATETIME2 NOT NULL DEFAULT (GETDATE()),
+  UltimoAcesso DATETIME2 NULL,
+  Ativo BIT DEFAULT 1
+);
+CREATE UNIQUE INDEX IX_Usuario_Username ON [Usuario](Username);
+CREATE UNIQUE INDEX IX_Usuario_Email ON [Usuario](Email);
+
+CREATE TABLE Professores (
+  IdProfessores INT IDENTITY(1,1) PRIMARY KEY,
+  Nome VARCHAR(150) NOT NULL,
+  Cpf VARCHAR(11) NULL,
+  Email VARCHAR(100) NULL,
+  Telefone VARCHAR(20) NULL,
+  Especializacao VARCHAR(100) NULL,
+  DataContratacao DATE NULL,
+  Salario DECIMAL(18,2) NULL,
+  DataCriacao DATETIME2 DEFAULT (GETDATE())
+);
+CREATE UNIQUE INDEX IX_Professores_Cpf ON Professores(Cpf) WHERE Cpf IS NOT NULL;
+CREATE INDEX IX_Professores_Nome ON Professores(Nome);
+
+CREATE TABLE Cursos (
+  IdCursos INT IDENTITY(1,1) PRIMARY KEY,
+  Nome VARCHAR(100) NOT NULL,
+  CargaHoraria VARCHAR(20) NULL,
+  Descricao VARCHAR(MAX) NULL,
+  Nivel VARCHAR(50) NOT NULL DEFAULT 'Graduação',
+  Departamentos_idDepartamentos INT NOT NULL,
+  DataCriacao DATETIME2 DEFAULT (GETDATE()),
+  CONSTRAINT CHK_Cursos_Nivel CHECK (Nivel IN ('Graduação','Pós-Graduação','Técnico','Mestrado','Doutorado'))
+);
+CREATE INDEX IX_Cursos_Nome ON Cursos(Nome);
+CREATE INDEX IX_Cursos_Departamento ON Cursos(Departamentos_idDepartamentos);
+
+CREATE TABLE Aluno (
+  Id INT IDENTITY(1,1) PRIMARY KEY,
+  NomeCompleto VARCHAR(150) NOT NULL,
+  DataNascimento DATE NOT NULL,
+  Cpf VARCHAR(11) NOT NULL,
+  Endereco VARCHAR(255) NULL,
+  Telefone VARCHAR(20) NULL,
+  Email VARCHAR(100) NOT NULL,
+  DataMatricula DATETIME2 NOT NULL DEFAULT (GETDATE()),
+  Status VARCHAR(50) NOT NULL DEFAULT 'Ativo',
+  DataCriacao DATETIME2 DEFAULT (GETDATE()),
+  CONSTRAINT CHK_Aluno_Status CHECK (Status IN ('Ativo','Inativo','Trancado','Formado'))
+);
+CREATE UNIQUE INDEX IX_Aluno_Cpf ON Aluno(Cpf);
+CREATE UNIQUE INDEX IX_Aluno_Email ON Aluno(Email);
+CREATE INDEX IX_Aluno_Nome ON Aluno(NomeCompleto);
+
+CREATE TABLE Disciplinas (
+  IdDisciplina INT IDENTITY(1,1) PRIMARY KEY,
+  Nome VARCHAR(100) NOT NULL,
+  Codigo VARCHAR(20) NULL,
+  CargaHoraria INT NOT NULL,
+  Creditos INT NULL,
+  Ementa VARCHAR(MAX) NULL,
+  Curso_IdCursos INT NOT NULL,
+  Professor_IdProfessores INT NULL,
+  DataCriacao DATETIME2 DEFAULT (GETDATE())
+);
+CREATE UNIQUE INDEX IX_Disciplinas_Codigo ON Disciplinas(Codigo) WHERE Codigo IS NOT NULL;
+CREATE INDEX IX_Disciplinas_Nome ON Disciplinas(Nome);
+CREATE INDEX IX_Disciplinas_Curso ON Disciplinas(Curso_IdCursos);
+CREATE INDEX IX_Disciplinas_Professor ON Disciplinas(Professor_IdProfessores);
+
+CREATE TABLE Matricula (
+  IdMatricula INT IDENTITY(1,1) PRIMARY KEY,
+  Aluno_Id INT NOT NULL,
+  Curso_IdCursos INT NOT NULL,
+  DataMatricula DATETIME2 DEFAULT (GETDATE()),
+  Semestre VARCHAR(10) NULL,
+  Ano INT NULL,
+  Status VARCHAR(50) NOT NULL DEFAULT 'Cursando',
+  CONSTRAINT CHK_Matricula_Status CHECK (Status IN ('Cursando','Concluído','Trancado','Cancelado'))
+);
+CREATE UNIQUE INDEX UX_Matricula_Aluno_Curso ON Matricula(Aluno_Id, Curso_IdCursos);
+CREATE INDEX IX_Matricula_Aluno ON Matricula(Aluno_Id);
+CREATE INDEX IX_Matricula_Curso ON Matricula(Curso_IdCursos);
+
+CREATE TABLE Notas (
+  IdNota INT IDENTITY(1,1) PRIMARY KEY,
+  Aluno_Id INT NOT NULL,
+  Disciplina_IdDisciplina INT NOT NULL,
+  Nota1 DECIMAL(5,2) NULL,
+  Nota2 DECIMAL(5,2) NULL,
+  NotaFinal DECIMAL(5,2) NULL,
+  Frequencia DECIMAL(5,2) NULL,
+  Status VARCHAR(50) NOT NULL DEFAULT 'Cursando',
+  Semestre VARCHAR(10) NULL,
+  Ano INT NULL,
+  DataLancamento DATETIME2 DEFAULT (GETDATE()),
+  CONSTRAINT CHK_Notas_Status CHECK (Status IN ('Aprovado','Reprovado','Cursando'))
+);
+CREATE INDEX IX_Notas_Aluno ON Notas(Aluno_Id);
+CREATE INDEX IX_Notas_Disciplina ON Notas(Disciplina_IdDisciplina);
+CREATE INDEX IX_Notas_Status ON Notas(Status);
+
+ALTER TABLE Cursos
+  ADD CONSTRAINT fk_curso_departamento FOREIGN KEY (Departamentos_idDepartamentos) REFERENCES Departamentos(idDepartamentos)
+  ON DELETE CASCADE;
+
+ALTER TABLE Disciplinas
+  ADD CONSTRAINT fk_disciplina_curso FOREIGN KEY (Curso_IdCursos) REFERENCES Cursos(IdCursos)
+  ON DELETE CASCADE;
+
+ALTER TABLE Disciplinas
+  ADD CONSTRAINT fk_disciplina_professor FOREIGN KEY (Professor_IdProfessores) REFERENCES Professores(IdProfessores)
+  ON DELETE SET NULL;
+
+ALTER TABLE Matricula
+  ADD CONSTRAINT fk_matricula_aluno FOREIGN KEY (Aluno_Id) REFERENCES Aluno(Id)
+  ON DELETE CASCADE;
+
+ALTER TABLE Matricula
+  ADD CONSTRAINT fk_matricula_curso FOREIGN KEY (Curso_IdCursos) REFERENCES Cursos(IdCursos)
+  ON DELETE CASCADE;
+
+ALTER TABLE Notas
+  ADD CONSTRAINT fk_nota_aluno FOREIGN KEY (Aluno_Id) REFERENCES Aluno(Id)
+  ON DELETE CASCADE;
+
+ALTER TABLE Notas
+  ADD CONSTRAINT fk_nota_disciplina FOREIGN KEY (Disciplina_IdDisciplina) REFERENCES Disciplinas(IdDisciplina)
+  ON DELETE CASCADE;
+
+INSERT INTO Departamentos (Nome, Codigo, Descricao) VALUES
+('Computação','DCC','Departamento de Ciência da Computação');
+
+INSERT INTO Professores (Nome, Cpf, Email, Telefone, Especializacao, DataContratacao, Salario) VALUES
+('Dr. João Silva','12345678901','joao.silva@universidade.com','11987654321','Algoritmos', '2020-01-15', 8500.00);
+
+INSERT INTO Cursos (Nome, CargaHoraria, Descricao, Nivel, Departamentos_idDepartamentos) VALUES
+('Ciência da Computação','3200h','Bacharelado em Ciência da Computação','Graduação',1);
+
+INSERT INTO Aluno (NomeCompleto, DataNascimento, Cpf, Endereco, Telefone, Email, DataMatricula, Status) VALUES
+('Aluno de Teste','2000-01-01','11122233344','Rua Teste, 1','11999999999','aluno@teste.com',GETDATE(),'Ativo');
+
+INSERT INTO Disciplinas (Nome, Codigo, CargaHoraria, Creditos, Ementa, Curso_IdCursos, Professor_IdProfessores) VALUES
+('Algoritmos e Programação I','CC101',80,4,'Introdução à programação',1,1);
+
+INSERT INTO Matricula (Aluno_Id, Curso_IdCursos, Semestre, Ano, Status) VALUES
+(1,1,'2025/1',2025,'Cursando');
+
+INSERT INTO Notas (Aluno_Id, Disciplina_IdDisciplina, Nota1, Nota2, NotaFinal, Frequencia, Status, Semestre, Ano) VALUES
+(1,1,8.5,9.0,8.75,95.0,'Cursando','2025/1',2025);
+
+
