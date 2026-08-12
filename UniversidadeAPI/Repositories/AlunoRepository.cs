@@ -1,93 +1,51 @@
-﻿using System.Data;
-using System.Data.Common;
 using UniversidadeAPI.Models;
-using Dapper;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace UniversidadeAPI.Repositories
 {
-    public class AlunoRepository : IAlunoRepository
+    public class AlunoRepository : RepositoryBase, IAlunoRepository
     {
-        private readonly ConectarBanco _conectarBanco;
-
-        public AlunoRepository(ConectarBanco conectarBanco)
+        public AlunoRepository(ConectarBanco conectarBanco) : base(conectarBanco)
         {
-            _conectarBanco = conectarBanco;
         }
 
+        public async Task<IEnumerable<Aluno>> GetAll() =>
+            await QueryAsync<Aluno>("SELECT * FROM Aluno");
 
-        public async Task<IEnumerable<Aluno>> GetAll()
-        {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "SELECT * FROM Aluno";
-
-                return await conexao.QueryAsync<Aluno>(sql);
-            }
-        }
-
-        public async Task<Aluno> GetById(int id)
-        {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "SELECT * FROM Aluno WHERE Id = @Id";
-
-                return await conexao.QueryFirstOrDefaultAsync<Aluno>(sql, new { Id = id });
-            }
-        }
-
+        public async Task<Aluno> GetById(int id) =>
+            await QueryFirstOrDefaultAsync<Aluno>("SELECT * FROM Aluno WHERE Id = @Id", new { Id = id });
 
         public async Task<Aluno> Add(Aluno aluno)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = @"
-                    INSERT INTO Aluno (NomeCompleto, DataNascimento, Cpf, Endereco, Telefone, Email, DataMatricula)
-                    VALUES (@NomeCompleto, @DataNascimento, @Cpf, @Endereco, @Telefone, @Email, @DataMatricula);
-                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
+            var sql = @"
+                INSERT INTO Aluno (NomeCompleto, DataNascimento, Cpf, Endereco, Telefone, Email, DataMatricula)
+                VALUES (@NomeCompleto, @DataNascimento, @Cpf, @Endereco, @Telefone, @Email, @DataMatricula);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                var newId = await conexao.ExecuteScalarAsync<int>(sql, aluno);
-
-                aluno.Id = newId;
-                return aluno;
-            }
+            aluno.Id = await ExecuteScalarAsync<int>(sql, aluno);
+            return aluno;
         }
-
 
         public async Task<bool> Update(Aluno aluno)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = @"
-                    UPDATE Aluno SET 
-                        NomeCompleto = @NomeCompleto, 
-                        DataNascimento = @DataNascimento, 
-                        Cpf = @Cpf, 
-                        Endereco = @Endereco, 
-                        Telefone = @Telefone, 
-                        Email = @Email, 
-                        DataMatricula = @DataMatricula
-                    WHERE Id = @Id;";
+            var sql = @"
+                UPDATE Aluno SET
+                    NomeCompleto = @NomeCompleto,
+                    DataNascimento = @DataNascimento,
+                    Cpf = @Cpf,
+                    Endereco = @Endereco,
+                    Telefone = @Telefone,
+                    Email = @Email,
+                    DataMatricula = @DataMatricula
+                WHERE Id = @Id;";
 
-                var affectedRows = await conexao.ExecuteAsync(sql, aluno);
-
-                return affectedRows > 0;
-            }
+            var affectedRows = await ExecuteAsync(sql, aluno);
+            return affectedRows > 0;
         }
-
 
         public async Task<bool> Delete(int id)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "DELETE FROM Aluno WHERE Id = @Id;";
-
-                var affectedRows = await conexao.ExecuteAsync(sql, new { Id = id });
-
-                return affectedRows > 0;
-            }
+            var affectedRows = await ExecuteAsync("DELETE FROM Aluno WHERE Id = @Id;", new { Id = id });
+            return affectedRows > 0;
         }
     }
 }
