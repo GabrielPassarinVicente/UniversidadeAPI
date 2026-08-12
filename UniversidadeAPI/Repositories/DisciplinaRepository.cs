@@ -3,18 +3,14 @@ using UniversidadeAPI.Models;
 
 namespace UniversidadeAPI.Repositories
 {
-    public class DisciplinaRepository : IDisciplinaRepository
+    public class DisciplinaRepository : RepositoryBase, IDisciplinaRepository
     {
-        private readonly ConectarBanco _conectarBanco;
-
-        public DisciplinaRepository(ConectarBanco conectarBanco)
+        public DisciplinaRepository(ConectarBanco conectarBanco) : base(conectarBanco)
         {
-            _conectarBanco = conectarBanco;
         }
 
-        public async Task<IEnumerable<Disciplina>> GetAll()
-        {
-            await using (var conexao = _conectarBanco.CriarConexao())
+        public async Task<IEnumerable<Disciplina>> GetAll() =>
+            await WithConnectionAsync(async conexao =>
             {
                 var sql = @"
             SELECT
@@ -25,7 +21,7 @@ namespace UniversidadeAPI.Repositories
             LEFT JOIN Cursos c ON d.Curso_IdCursos = c.IdCursos
             LEFT JOIN Professores p ON d.Professor_IdProfessores = p.IdProfessores";
 
-                var disciplinas = await conexao.QueryAsync<Disciplina, Curso, Professor, Disciplina>(
+                return await conexao.QueryAsync<Disciplina, Curso, Professor, Disciplina>(
                     sql,
                     (disciplina, curso, professor) =>
                     {
@@ -35,14 +31,10 @@ namespace UniversidadeAPI.Repositories
                     },
                     splitOn: "IdCursos,IdProfessores"
                 );
+            });
 
-                return disciplinas;
-            }
-        }
-
-        public async Task<Disciplina> GetById(int id)
-        {
-            await using (var conexao = _conectarBanco.CriarConexao())
+        public async Task<Disciplina> GetById(int id) =>
+            await WithConnectionAsync(async conexao =>
             {
                 var sql = @"
             SELECT
@@ -54,7 +46,7 @@ namespace UniversidadeAPI.Repositories
             LEFT JOIN Professores p ON d.Professor_IdProfessores = p.IdProfessores
             WHERE d.IdDisciplina = @IdDisciplina";
 
-                var disciplina = await conexao.QueryAsync<Disciplina, Curso, Professor, Disciplina>(
+                var disciplinas = await conexao.QueryAsync<Disciplina, Curso, Professor, Disciplina>(
                     sql,
                     (disciplina, curso, professor) =>
                     {
@@ -66,100 +58,72 @@ namespace UniversidadeAPI.Repositories
                     splitOn: "IdCursos,IdProfessores"
                 );
 
-                return disciplina.FirstOrDefault();
-            }
-        }
+                return disciplinas.FirstOrDefault();
+            });
 
-        public async Task<IEnumerable<Disciplina>> GetByCurso(int cursoId)
-        {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "SELECT * FROM Disciplinas WHERE Curso_IdCursos = @CursoId";
-                return await conexao.QueryAsync<Disciplina>(sql, new { CursoId = cursoId });
-            }
-        }
+        public async Task<IEnumerable<Disciplina>> GetByCurso(int cursoId) =>
+            await QueryAsync<Disciplina>("SELECT * FROM Disciplinas WHERE Curso_IdCursos = @CursoId", new { CursoId = cursoId });
 
-        public async Task<IEnumerable<Disciplina>> GetByProfessor(int professorId)
-        {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "SELECT * FROM Disciplinas WHERE Professor_IdProfessores = @ProfessorId";
-                return await conexao.QueryAsync<Disciplina>(sql, new { ProfessorId = professorId });
-            }
-        }
+        public async Task<IEnumerable<Disciplina>> GetByProfessor(int professorId) =>
+            await QueryAsync<Disciplina>("SELECT * FROM Disciplinas WHERE Professor_IdProfessores = @ProfessorId", new { ProfessorId = professorId });
 
         public async Task<Disciplina> Add(Disciplina disciplina)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = @"
-                    INSERT INTO Disciplinas (Nome, Codigo, CargaHoraria, Creditos, Ementa, Curso_IdCursos, Professor_IdProfessores)
-                    VALUES (@Nome, @Codigo, @CargaHoraria, @Creditos, @Ementa, @Curso_IdCursos, @Professor_IdProfessores);
-                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
+            var sql = @"
+                INSERT INTO Disciplinas (Nome, Codigo, CargaHoraria, Creditos, Ementa, Curso_IdCursos, Professor_IdProfessores)
+                VALUES (@Nome, @Codigo, @CargaHoraria, @Creditos, @Ementa, @Curso_IdCursos, @Professor_IdProfessores);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                var newId = await conexao.ExecuteScalarAsync<int>(sql, new
-                {
-                    Nome = disciplina.Nome,
-                    Codigo = disciplina.Codigo,
-                    CargaHoraria = disciplina.CargaHoraria,
-                    Creditos = disciplina.Creditos,
-                    Ementa = disciplina.Ementa,
-                    Curso_IdCursos = disciplina.Curso_IdCursos,
-                    Professor_IdProfessores = disciplina.Professor_IdProfessores
-                });
-                disciplina.IdDisciplina = newId;
-                return disciplina;
-            }
+            disciplina.IdDisciplina = await ExecuteScalarAsync<int>(sql, new
+            {
+                disciplina.Nome,
+                disciplina.Codigo,
+                disciplina.CargaHoraria,
+                disciplina.Creditos,
+                disciplina.Ementa,
+                disciplina.Curso_IdCursos,
+                disciplina.Professor_IdProfessores
+            });
+            return disciplina;
         }
 
         public async Task<bool> Update(Disciplina disciplina)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = @"
-                    UPDATE Disciplinas SET
-                        Nome = @Nome,
-                        Codigo = @Codigo,
-                        CargaHoraria = @CargaHoraria,
-                        Creditos = @Creditos,
-                        Ementa = @Ementa,
-                        Curso_IdCursos = @Curso_IdCursos,
-                        Professor_IdProfessores = @Professor_IdProfessores
-                    WHERE IdDisciplina = @IdDisciplina;";
+            var sql = @"
+                UPDATE Disciplinas SET
+                    Nome = @Nome,
+                    Codigo = @Codigo,
+                    CargaHoraria = @CargaHoraria,
+                    Creditos = @Creditos,
+                    Ementa = @Ementa,
+                    Curso_IdCursos = @Curso_IdCursos,
+                    Professor_IdProfessores = @Professor_IdProfessores
+                WHERE IdDisciplina = @IdDisciplina;";
 
-                var affectedRows = await conexao.ExecuteAsync(sql, new
-                {
-                    IdDisciplina = disciplina.IdDisciplina,
-                    Nome = disciplina.Nome,
-                    Codigo = disciplina.Codigo,
-                    CargaHoraria = disciplina.CargaHoraria,
-                    Creditos = disciplina.Creditos,
-                    Ementa = disciplina.Ementa,
-                    Curso_IdCursos = disciplina.Curso_IdCursos,
-                    Professor_IdProfessores = disciplina.Professor_IdProfessores
-                });
-                return affectedRows > 0;
-            }
+            var affectedRows = await ExecuteAsync(sql, new
+            {
+                disciplina.IdDisciplina,
+                disciplina.Nome,
+                disciplina.Codigo,
+                disciplina.CargaHoraria,
+                disciplina.Creditos,
+                disciplina.Ementa,
+                disciplina.Curso_IdCursos,
+                disciplina.Professor_IdProfessores
+            });
+            return affectedRows > 0;
         }
 
         public async Task<bool> Delete(int id)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "DELETE FROM Disciplinas WHERE IdDisciplina = @IdDisciplina";
-                await conexao.ExecuteAsync(sql, new { IdDisciplina = id });
-                return true;
-            }
+            await ExecuteAsync("DELETE FROM Disciplinas WHERE IdDisciplina = @IdDisciplina", new { IdDisciplina = id });
+            return true;
         }
 
         public async Task<bool> CodigoExists(string codigo)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "SELECT COUNT(*) FROM Disciplinas WHERE Codigo = @Codigo";
-                var count = await conexao.ExecuteScalarAsync<int>(sql, new { Codigo = codigo });
-                return count > 0;
-            }
+            var count = await ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Disciplinas WHERE Codigo = @Codigo", new { Codigo = codigo });
+            return count > 0;
         }
     }
 }
