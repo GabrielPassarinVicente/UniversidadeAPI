@@ -17,9 +17,6 @@ namespace UniversidadeAPI.Controllers
             _departamentoService = departamentoService;
         }
 
-        /// <summary>
-        /// Listar todos os departamentos
-        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Departamento>>> GetAllDepartamentos()
         {
@@ -27,9 +24,6 @@ namespace UniversidadeAPI.Controllers
             return Ok(departamentos);
         }
 
-        /// <summary>
-        /// Buscar departamento por ID
-        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Departamento>> GetDepartamentoById(int id)
         {
@@ -43,26 +37,13 @@ namespace UniversidadeAPI.Controllers
             return Ok(departamento);
         }
 
-        /// <summary>
-        /// Adicionar novo departamento
-        /// </summary>
         [HttpPost]
         public async Task<ActionResult<Departamento>> AddDepartamento([FromBody] Departamento departamento)
         {
-            try
-            {
-                var newDepartamento = await _departamentoService.AddDepartamento(departamento);
-                return CreatedAtAction(nameof(GetDepartamentoById), new { id = newDepartamento.IdDepartamentos }, newDepartamento);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var newDepartamento = await _departamentoService.AddDepartamento(departamento);
+            return CreatedAtAction(nameof(GetDepartamentoById), new { id = newDepartamento.IdDepartamentos }, newDepartamento);
         }
 
-        /// <summary>
-        /// Atualizar departamento existente
-        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDepartamento(int id, [FromBody] Departamento departamento)
         {
@@ -71,26 +52,16 @@ namespace UniversidadeAPI.Controllers
                 return BadRequest(new { message = "O ID na URL não corresponde ao ID do departamento no corpo da requisição." });
             }
 
-            try
-            {
-                var updated = await _departamentoService.UpdateDepartamento(departamento);
+            var updated = await _departamentoService.UpdateDepartamento(departamento);
 
-                if (updated)
-                {
-                    return NoContent();
-                }
-
-                return NotFound(new { message = $"Departamento com ID {id} não encontrado." });
-            }
-            catch (ArgumentException ex)
+            if (updated)
             {
-                return BadRequest(new { message = ex.Message });
+                return NoContent();
             }
+
+            return NotFound(new { message = $"Departamento com ID {id} não encontrado." });
         }
 
-        /// <summary>
-        /// Deletar departamento
-        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDepartamento(int id)
         {

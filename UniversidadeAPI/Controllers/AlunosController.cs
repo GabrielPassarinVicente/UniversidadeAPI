@@ -1,10 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UniversidadeAPI.Models;
 using UniversidadeAPI.Services;
-using System;
-using System.Collections.Generic; 
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace UniversidadeAPI.Controllers
 {
@@ -30,28 +27,20 @@ namespace UniversidadeAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Aluno>> GetAluno(int id)
         {
-             var aluno = await _alunoService.GetAlunoById(id);
+            var aluno = await _alunoService.GetAlunoById(id);
 
             if (aluno == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
-            return Ok(aluno); 
+            return Ok(aluno);
         }
 
         [HttpPost]
         public async Task<ActionResult<Aluno>> PostAluno(Aluno aluno)
         {
-            try
-            {
-                var newAluno = await _alunoService.AddAluno(aluno);
-
-                return CreatedAtAction(nameof(GetAluno), new { id = newAluno.Id }, newAluno);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var newAluno = await _alunoService.AddAluno(aluno);
+            return CreatedAtAction(nameof(GetAluno), new { id = newAluno.Id }, newAluno);
         }
 
         [HttpPut("{id}")]
@@ -59,25 +48,17 @@ namespace UniversidadeAPI.Controllers
         {
             if (id != aluno.Id)
             {
-                return BadRequest("O ID na URL n„o corresponde ao ID do aluno no corpo da requisiÁ„o.");
+                return BadRequest("O ID na URL n√£o corresponde ao ID do aluno no corpo da requisi√ß√£o.");
             }
 
-            try
+            var updated = await _alunoService.UpdateAluno(aluno);
+
+            if (updated)
             {
-                // Usa 'await'
-                var updated = await _alunoService.UpdateAluno(aluno);
-
-                if (updated)
-                {
-                    return NoContent(); 
-                }
-
-                return NotFound(); 
+                return NoContent();
             }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message); 
-            }
+
+            return NotFound();
         }
 
         [HttpDelete("{id}")]
@@ -85,10 +66,10 @@ namespace UniversidadeAPI.Controllers
         {
             if (await _alunoService.DeleteAluno(id))
             {
-                return NoContent(); 
+                return NoContent();
             }
 
-            return NotFound(); 
+            return NotFound();
         }
     }
 }
