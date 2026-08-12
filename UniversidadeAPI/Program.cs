@@ -1,5 +1,6 @@
 using UniversidadeAPI.Repositories;
 using UniversidadeAPI.Services;
+using UniversidadeAPI.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -113,6 +114,8 @@ namespace UniversidadeAPI
             });
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {
