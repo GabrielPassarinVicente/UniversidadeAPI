@@ -1,4 +1,3 @@
-using MySql.Data.MySqlClient;
 using UniversidadeAPI.Repositories;
 using UniversidadeAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,7 +24,7 @@ namespace UniversidadeAPI
                 });
             });
 
-            // Configuração JWT
+            // Configuraï¿½ï¿½o JWT
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
 
@@ -50,7 +49,7 @@ namespace UniversidadeAPI
 
             builder.Services.AddScoped<ConectarBanco>();
 
-            // Repositórios
+            // Repositï¿½rios
             builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
             builder.Services.AddScoped<ICursoRepository, CursoRepository>();
             builder.Services.AddScoped<ICursoProfessorRepository, CursoProfessorRepository>();
@@ -59,7 +58,7 @@ namespace UniversidadeAPI
             builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
             builder.Services.AddScoped<IDisciplinaRepository, DisciplinaRepository>();
 
-            // Serviços
+            // Serviï¿½os
             builder.Services.AddScoped<IAlunoService, AlunoService>();
             builder.Services.AddScoped<ICursoService, CursoService>();
             builder.Services.AddScoped<IProfessorService, ProfessorService>();
@@ -70,14 +69,14 @@ namespace UniversidadeAPI
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             
-            // Configuração do Swagger com JWT
+            // Configuraï¿½ï¿½o do Swagger com JWT
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Universidade API",
                     Version = "v1",
-                    Description = "API para gerenciamento de universidade com autenticação JWT",
+                    Description = "API para gerenciamento de universidade com autenticaï¿½ï¿½o JWT",
                     Contact = new OpenApiContact
                     {
                         Name = "Suporte",
@@ -85,7 +84,7 @@ namespace UniversidadeAPI
                     }
                 });
 
-                // Definir o esquema de segurança JWT
+                // Definir o esquema de seguranï¿½a JWT
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -96,7 +95,7 @@ namespace UniversidadeAPI
                     Description = "Insira o token JWT no formato: Bearer {seu token}"
                 });
 
-                // Adicionar requisito de segurança global
+                // Adicionar requisito de seguranï¿½a global
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {

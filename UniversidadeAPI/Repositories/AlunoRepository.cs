@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System.Data;
+﻿using System.Data;
 using System.Data.Common;
 using UniversidadeAPI.Models;
 using Dapper;
@@ -46,9 +45,8 @@ namespace UniversidadeAPI.Repositories
             {
                 var sql = @"
                     INSERT INTO Aluno (NomeCompleto, DataNascimento, Cpf, Endereco, Telefone, Email, DataMatricula)
-                    VALUES (@NomeCompleto, @DataNascimento, @Cpf, @Endereco, @Telefone, @Email, @DataMatricula);";
-                    
-                    
+                    VALUES (@NomeCompleto, @DataNascimento, @Cpf, @Endereco, @Telefone, @Email, @DataMatricula);
+                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
                 var newId = await conexao.ExecuteScalarAsync<int>(sql, aluno);
 

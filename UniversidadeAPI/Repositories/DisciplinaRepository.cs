@@ -1,6 +1,5 @@
 using Dapper;
 using UniversidadeAPI.Models;
-using MySql.Data.MySqlClient;
 
 namespace UniversidadeAPI.Repositories
 {
@@ -18,8 +17,8 @@ namespace UniversidadeAPI.Repositories
             await using (var conexao = _conectarBanco.CriarConexao())
             {
                 var sql = @"
-            SELECT 
-                d.*, 
+            SELECT
+                d.*,
                 c.IdCursos, c.Nome AS CursoNome, c.CargaHoraria AS CursoCargaHoraria, c.Departamentos_idDepartamentos,
                 p.IdProfessores, p.Nome AS ProfessorNome
             FROM Disciplinas d
@@ -46,8 +45,8 @@ namespace UniversidadeAPI.Repositories
             await using (var conexao = _conectarBanco.CriarConexao())
             {
                 var sql = @"
-            SELECT 
-                d.*, 
+            SELECT
+                d.*,
                 c.IdCursos, c.Nome AS CursoNome, c.CargaHoraria AS CursoCargaHoraria, c.Departamentos_idDepartamentos,
                 p.IdProfessores, p.Nome AS ProfessorNome
             FROM Disciplinas d
@@ -91,88 +90,67 @@ namespace UniversidadeAPI.Repositories
 
         public async Task<Disciplina> Add(Disciplina disciplina)
         {
-            try
+            await using (var conexao = _conectarBanco.CriarConexao())
             {
-                await using (var conexao = _conectarBanco.CriarConexao())
-                {
-                    var sql = @"
-                        INSERT INTO Disciplinas (Nome, Codigo, CargaHoraria, Creditos, Ementa, Curso_IdCursos, Professor_IdProfessores)
-                        VALUES (@Nome, @Codigo, @CargaHoraria, @Creditos, @Ementa, @Curso_IdCursos, @Professor_IdProfessores);
-                        SELECT LAST_INSERT_ID();";
+                var sql = @"
+                    INSERT INTO Disciplinas (Nome, Codigo, CargaHoraria, Creditos, Ementa, Curso_IdCursos, Professor_IdProfessores)
+                    VALUES (@Nome, @Codigo, @CargaHoraria, @Creditos, @Ementa, @Curso_IdCursos, @Professor_IdProfessores);
+                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                    var newId = await conexao.ExecuteScalarAsync<int>(sql, new
-                    {
-                        Nome = disciplina.Nome,
-                        Codigo = disciplina.Codigo,
-                        CargaHoraria = disciplina.CargaHoraria,
-                        Creditos = disciplina.Creditos,
-                        Ementa = disciplina.Ementa,
-                        Curso_IdCursos = disciplina.Curso_IdCursos,
-                        Professor_IdProfessores = disciplina.Professor_IdProfessores
-                    });
-                    disciplina.IdDisciplina = newId;
-                    return disciplina;
-                }
-            }
-            catch (MySqlException ex)
-            {
-                throw new Exception($"Erro ao inserir disciplina: {ex.Message}", ex);
+                var newId = await conexao.ExecuteScalarAsync<int>(sql, new
+                {
+                    Nome = disciplina.Nome,
+                    Codigo = disciplina.Codigo,
+                    CargaHoraria = disciplina.CargaHoraria,
+                    Creditos = disciplina.Creditos,
+                    Ementa = disciplina.Ementa,
+                    Curso_IdCursos = disciplina.Curso_IdCursos,
+                    Professor_IdProfessores = disciplina.Professor_IdProfessores
+                });
+                disciplina.IdDisciplina = newId;
+                return disciplina;
             }
         }
 
         public async Task<bool> Update(Disciplina disciplina)
         {
-            try
+            await using (var conexao = _conectarBanco.CriarConexao())
             {
-                await using (var conexao = _conectarBanco.CriarConexao())
-                {
-                    var sql = @"
-                        UPDATE Disciplinas SET 
-                            Nome = @Nome, 
-                            Codigo = @Codigo, 
-                            CargaHoraria = @CargaHoraria,
-                            Creditos = @Creditos,
-                            Ementa = @Ementa,
-                            Curso_IdCursos = @Curso_IdCursos,
-                            Professor_IdProfessores = @Professor_IdProfessores
-                        WHERE IdDisciplina = @IdDisciplina;";
+                var sql = @"
+                    UPDATE Disciplinas SET
+                        Nome = @Nome,
+                        Codigo = @Codigo,
+                        CargaHoraria = @CargaHoraria,
+                        Creditos = @Creditos,
+                        Ementa = @Ementa,
+                        Curso_IdCursos = @Curso_IdCursos,
+                        Professor_IdProfessores = @Professor_IdProfessores
+                    WHERE IdDisciplina = @IdDisciplina;";
 
-                    var affectedRows = await conexao.ExecuteAsync(sql, new
-                    {
-                        IdDisciplina = disciplina.IdDisciplina,
-                        Nome = disciplina.Nome,
-                        Codigo = disciplina.Codigo,
-                        CargaHoraria = disciplina.CargaHoraria,
-                        Creditos = disciplina.Creditos,
-                        Ementa = disciplina.Ementa,
-                        Curso_IdCursos = disciplina.Curso_IdCursos,
-                        Professor_IdProfessores = disciplina.Professor_IdProfessores
-                    });
-                    return affectedRows > 0;
-                }
-            }
-            catch (MySqlException ex)
-            {
-                throw new Exception($"Erro ao atualizar disciplina: {ex.Message}", ex);
+                var affectedRows = await conexao.ExecuteAsync(sql, new
+                {
+                    IdDisciplina = disciplina.IdDisciplina,
+                    Nome = disciplina.Nome,
+                    Codigo = disciplina.Codigo,
+                    CargaHoraria = disciplina.CargaHoraria,
+                    Creditos = disciplina.Creditos,
+                    Ementa = disciplina.Ementa,
+                    Curso_IdCursos = disciplina.Curso_IdCursos,
+                    Professor_IdProfessores = disciplina.Professor_IdProfessores
+                });
+                return affectedRows > 0;
             }
         }
 
         public async Task<bool> Delete(int id)
         {
-            try
+            await using (var conexao = _conectarBanco.CriarConexao())
             {
-                await using (var conexao = _conectarBanco.CriarConexao())
-                {
-                    var sql = "DELETE FROM Disciplinas WHERE IdDisciplina = @IdDisciplina";
-                    await conexao.ExecuteAsync(sql, new { IdDisciplina = id });
-                    return true;
-                }
+                var sql = "DELETE FROM Disciplinas WHERE IdDisciplina = @IdDisciplina";
+                await conexao.ExecuteAsync(sql, new { IdDisciplina = id });
+                return true;
             }
-            catch (MySqlException ex)
-            {
-                throw new Exception($"Erro ao deletar disciplina: {ex.Message}", ex);
-            }
-        }   
+        }
 
         public async Task<bool> CodigoExists(string codigo)
         {

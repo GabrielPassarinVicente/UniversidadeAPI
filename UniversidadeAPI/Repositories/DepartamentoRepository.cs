@@ -37,7 +37,7 @@ namespace UniversidadeAPI.Repositories
                 var sql = @"
                     INSERT INTO Departamentos (Nome, Codigo, Descricao, DataCriacao)
                     VALUES (@Nome, @Codigo, @Descricao, @DataCriacao);
-                    SELECT LAST_INSERT_ID();";
+                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
                 var newId = await conexao.ExecuteScalarAsync<int>(sql, departamento);
                 departamento.IdDepartamentos = newId;
