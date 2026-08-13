@@ -20,6 +20,11 @@ namespace UniversidadeAPI.Middleware
             {
                 await _next(context);
             }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex, "Erro de configuração ao processar {Method} {Path}", context.Request.Method, context.Request.Path);
+                await WriteResponseAsync(context, HttpStatusCode.InternalServerError, "Ocorreu um erro inesperado.");
+            }
             catch (ArgumentException ex)
             {
                 await WriteResponseAsync(context, HttpStatusCode.BadRequest, ex.Message);

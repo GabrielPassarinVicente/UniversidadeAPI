@@ -116,8 +116,8 @@ namespace UniversidadeAPI.Repositories
 
         public async Task<bool> Delete(int id)
         {
-            await ExecuteAsync("DELETE FROM Disciplinas WHERE IdDisciplina = @IdDisciplina", new { IdDisciplina = id });
-            return true;
+            var affectedRows = await ExecuteAsync("DELETE FROM Disciplinas WHERE IdDisciplina = @IdDisciplina", new { IdDisciplina = id });
+            return affectedRows > 0;
         }
 
         public async Task<bool> CodigoExists(string codigo)

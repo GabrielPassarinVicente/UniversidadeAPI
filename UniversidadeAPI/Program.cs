@@ -29,6 +29,12 @@ namespace UniversidadeAPI
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
 
+            if (string.IsNullOrWhiteSpace(secretKey) || secretKey == "CHANGE_ME_JWT_SECRET_KEY_MIN_32_CHARS")
+            {
+                throw new InvalidOperationException(
+                    "Configure JwtSettings:SecretKey (via dotnet user-secrets ou variável de ambiente) com uma chave real de pelo menos 32 caracteres antes de executar a API.");
+            }
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

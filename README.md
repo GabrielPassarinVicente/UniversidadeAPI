@@ -20,7 +20,7 @@ Auth: JWT
 3. Na primeira vez, rode o script `create_database` contra o container do banco (porta `1433`
    exposta no host):
    ```
-   sqlcmd -S localhost,1433 -U sa -P "<mesma senha do .env>" -i create_database
+   sqlcmd -S localhost,1433 -U sa -P "<mesma senha do .env>" -C -f 65001 -i create_database
    ```
    (ou abra no Azure Data Studio / SSMS apontando para `localhost,1433`)
 4. A API estará em `http://localhost:8080`, com Swagger em `http://localhost:8080/swagger`.
@@ -33,7 +33,7 @@ Auth: JWT
    cd UniversidadeAPI
    dotnet user-secrets init
    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost\SQLEXPRESS;Database=mydb;User Id=sa;Password=SuaSenha;TrustServerCertificate=True;"
-   dotnet user-secrets set "JwtSettings:SecretKey" "sua-chave-secreta-super-segura-com-pelo-menos-32-caracteres"
+   dotnet user-secrets set "JwtSettings:SecretKey" "CHANGE_ME_JWT_SECRET_KEY_MIN_32_CHARS"
    ```
 2. Crie o banco (SQL Server):
    ```
