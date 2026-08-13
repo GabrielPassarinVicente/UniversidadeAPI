@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UniversidadeAPI.Models;
 using UniversidadeAPI.Services;
 
@@ -13,7 +10,6 @@ namespace UniversidadeAPI.Controllers
     [Route("api/[controller]")]
     public class ProfessoresController : ControllerBase
     {
-        
         private readonly IProfessorService _professorService;
 
         public ProfessoresController(IProfessorService professorService)
@@ -43,15 +39,8 @@ namespace UniversidadeAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Professor>> AddProfessor(Professor professor)
         {
-            try
-            {
-                var newProfessor = await _professorService.AddProfessor(professor);
-                return CreatedAtAction(nameof(GetProfessorById), new { id = newProfessor.IdProfessores }, newProfessor);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var newProfessor = await _professorService.AddProfessor(professor);
+            return CreatedAtAction(nameof(GetProfessorById), new { id = newProfessor.IdProfessores }, newProfessor);
         }
 
         [HttpPut("{id}")]
@@ -62,21 +51,14 @@ namespace UniversidadeAPI.Controllers
                 return BadRequest("O ID na URL não corresponde ao ID do professor no corpo da requisição.");
             }
 
-            try
-            {
-                var updated = await _professorService.UpdateProfessor(professor);
+            var updated = await _professorService.UpdateProfessor(professor);
 
-                if (updated)
-                {
-                    return NoContent();
-                }
-
-                return NotFound();
-            }
-            catch (ArgumentException ex)
+            if (updated)
             {
-                return BadRequest(ex.Message);
+                return NoContent();
             }
+
+            return NotFound();
         }
 
         [HttpDelete("{id}")]

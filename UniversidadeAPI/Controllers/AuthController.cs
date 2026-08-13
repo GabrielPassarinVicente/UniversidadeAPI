@@ -18,43 +18,21 @@ namespace UniversidadeAPI.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
         {
-            try
-            {
-                var response = await _authService.Login(request);
-                return Ok(response);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var response = await _authService.Login(request);
+            return Ok(response);
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<Usuario>> Register([FromBody] RegistroRequest request)
         {
-            try
+            var usuario = await _authService.Register(request);
+            return CreatedAtAction(nameof(Register), new { id = usuario.Id }, new
             {
-                var usuario = await _authService.Register(request);
-                return CreatedAtAction(nameof(Register), new { id = usuario.Id }, new
-                {
-                    id = usuario.Id,
-                    username = usuario.Username,
-                    email = usuario.Email,
-                    dataCriacao = usuario.DataCriacao
-                });
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Erro ao registrar usuário", error = ex.Message });
-            }
+                id = usuario.Id,
+                username = usuario.Username,
+                email = usuario.Email,
+                dataCriacao = usuario.DataCriacao
+            });
         }
     }
 }

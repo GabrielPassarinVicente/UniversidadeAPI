@@ -54,6 +54,14 @@ CREATE TABLE Cursos (
 CREATE INDEX IX_Cursos_Nome ON Cursos(Nome);
 CREATE INDEX IX_Cursos_Departamento ON Cursos(Departamentos_idDepartamentos);
 
+CREATE TABLE CursoProfessor (
+  Cursos_IdCursos INT NOT NULL,
+  Professores_IdProfessores INT NOT NULL,
+  PRIMARY KEY (Cursos_IdCursos, Professores_IdProfessores),
+  CONSTRAINT fk_cursoprofessor_curso FOREIGN KEY (Cursos_IdCursos) REFERENCES Cursos(IdCursos) ON DELETE CASCADE,
+  CONSTRAINT fk_cursoprofessor_professor FOREIGN KEY (Professores_IdProfessores) REFERENCES Professores(IdProfessores) ON DELETE CASCADE
+);
+
 CREATE TABLE Aluno (
   Id INT IDENTITY(1,1) PRIMARY KEY,
   NomeCompleto VARCHAR(150) NOT NULL,

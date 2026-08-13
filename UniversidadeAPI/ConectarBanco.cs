@@ -1,12 +1,12 @@
-﻿using MySql.Data.MySqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data.Common;
 
 namespace UniversidadeAPI
 {
     public class ConectarBanco
     {
-
         private readonly string _connectionString;
+
         public ConectarBanco(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -20,9 +20,7 @@ namespace UniversidadeAPI
 
         public DbConnection CriarConexao()
         {
-            return new MySqlConnection(_connectionString);
+            return new SqlConnection(_connectionString);
         }
     }
-
 }
-

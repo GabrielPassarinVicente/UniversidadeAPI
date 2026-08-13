@@ -1,68 +1,40 @@
-using Dapper;
 using UniversidadeAPI.Models;
 
 namespace UniversidadeAPI.Repositories
 {
-    public class UsuarioRepository : IUsuarioRepository
+    public class UsuarioRepository : RepositoryBase, IUsuarioRepository
     {
-        private readonly ConectarBanco _conectarBanco;
-
-        public UsuarioRepository(ConectarBanco conectarBanco)
+        public UsuarioRepository(ConectarBanco conectarBanco) : base(conectarBanco)
         {
-            _conectarBanco = conectarBanco;
         }
 
-        public async Task<Usuario> GetByUsername(string username)
-        {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "SELECT * FROM Usuario WHERE Username = @Username";
-                return await conexao.QueryFirstOrDefaultAsync<Usuario>(sql, new { Username = username });
-            }
-        }
+        public async Task<Usuario> GetByUsername(string username) =>
+            await QueryFirstOrDefaultAsync<Usuario>("SELECT * FROM Usuario WHERE Username = @Username", new { Username = username });
 
-        public async Task<Usuario> GetById(int id)
-        {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "SELECT * FROM Usuario WHERE Id = @Id";
-                return await conexao.QueryFirstOrDefaultAsync<Usuario>(sql, new { Id = id });
-            }
-        }
+        public async Task<Usuario> GetById(int id) =>
+            await QueryFirstOrDefaultAsync<Usuario>("SELECT * FROM Usuario WHERE Id = @Id", new { Id = id });
 
         public async Task<Usuario> Add(Usuario usuario)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = @"
-                    INSERT INTO Usuario (Username, PasswordHash, Email, DataCriacao)
-                    VALUES (@Username, @PasswordHash, @Email, @DataCriacao);
-                    SELECT LAST_INSERT_ID();";
+            var sql = @"
+                INSERT INTO Usuario (Username, PasswordHash, Email, DataCriacao)
+                VALUES (@Username, @PasswordHash, @Email, @DataCriacao);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                var newId = await conexao.ExecuteScalarAsync<int>(sql, usuario);
-                usuario.Id = newId;
-                return usuario;
-            }
+            usuario.Id = await ExecuteScalarAsync<int>(sql, usuario);
+            return usuario;
         }
 
         public async Task<bool> UsernameExists(string username)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "SELECT COUNT(*) FROM Usuario WHERE Username = @Username";
-                var count = await conexao.ExecuteScalarAsync<int>(sql, new { Username = username });
-                return count > 0;
-            }
+            var count = await ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Usuario WHERE Username = @Username", new { Username = username });
+            return count > 0;
         }
 
         public async Task<bool> EmailExists(string email)
         {
-            await using (var conexao = _conectarBanco.CriarConexao())
-            {
-                var sql = "SELECT COUNT(*) FROM Usuario WHERE Email = @Email";
-                var count = await conexao.ExecuteScalarAsync<int>(sql, new { Email = email });
-                return count > 0;
-            }
+            var count = await ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Usuario WHERE Email = @Email", new { Email = email });
+            return count > 0;
         }
     }
 }

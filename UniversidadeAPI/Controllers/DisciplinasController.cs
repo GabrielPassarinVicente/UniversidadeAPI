@@ -18,9 +18,6 @@ namespace UniversidadeAPI.Controllers
             _disciplinaService = disciplinaService;
         }
 
-        /// <summary>
-        /// Listar todas as disciplinas
-        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Disciplina>>> GetAllDisciplinas()
         {
@@ -28,9 +25,6 @@ namespace UniversidadeAPI.Controllers
             return Ok(disciplinas);
         }
 
-        /// <summary>
-        /// Buscar disciplina por ID
-        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Disciplina>> GetDisciplinaById(int id)
         {
@@ -38,15 +32,12 @@ namespace UniversidadeAPI.Controllers
 
             if (disciplina == null)
             {
-                return NotFound(new { message = $"Disciplina com ID {id} n„o encontrada." });
+                return NotFound(new { message = $"Disciplina com ID {id} n√£o encontrada." });
             }
 
             return Ok(disciplina);
         }
 
-        /// <summary>
-        /// Listar disciplinas por curso
-        /// </summary>
         [HttpGet("curso/{cursoId}")]
         public async Task<ActionResult<IEnumerable<Disciplina>>> GetDisciplinasByCurso(int cursoId)
         {
@@ -54,9 +45,6 @@ namespace UniversidadeAPI.Controllers
             return Ok(disciplinas);
         }
 
-        /// <summary>
-        /// Listar disciplinas por professor
-        /// </summary>
         [HttpGet("professor/{professorId}")]
         public async Task<ActionResult<IEnumerable<Disciplina>>> GetDisciplinasByProfessor(int professorId)
         {
@@ -64,60 +52,37 @@ namespace UniversidadeAPI.Controllers
             return Ok(disciplinas);
         }
 
-        /// <summary>
-        /// Adicionar nova disciplina
-        /// </summary>
         [HttpPost]
         public async Task<ActionResult<Disciplina>> AddDisciplina([FromBody] Disciplina disciplina)
         {
-            try
-            {
-                var newDisciplina = await _disciplinaService.AddDisciplina(disciplina);
-                return CreatedAtAction(nameof(GetDisciplinaById), new { id = newDisciplina.IdDisciplina }, newDisciplina);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var newDisciplina = await _disciplinaService.AddDisciplina(disciplina);
+            return CreatedAtAction(nameof(GetDisciplinaById), new { id = newDisciplina.IdDisciplina }, newDisciplina);
         }
 
-        /// <summary>
-        /// Atualizar disciplina existente
-        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDisciplina(int id, [FromBody] Disciplina disciplina)
         {
             if (id != disciplina.IdDisciplina)
             {
-                return BadRequest(new { message = "O ID na URL n„o corresponde ao ID da disciplina no corpo da requisiÁ„o." });
+                return BadRequest(new { message = "O ID na URL n√£o corresponde ao ID da disciplina no corpo da requisi√ß√£o." });
             }
 
-            try
+            var updated = await _disciplinaService.UpdateDisciplina(disciplina);
+
+            if (updated)
             {
-                var updated = await _disciplinaService.UpdateDisciplina(disciplina);
-
-                if (updated)
-                {
-                    return NoContent();
-                }
-
-                return NotFound(new { message = $"Disciplina com ID {id} n„o encontrada." });
+                return NoContent();
             }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+
+            return NotFound(new { message = $"Disciplina com ID {id} n√£o encontrada." });
         }
 
-        /// <summary>
-        /// Deletar disciplina (exclus„o em cascata configurada no banco)
-        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDisciplina(int id)
         {
             if (id <= 0)
             {
-                return BadRequest(new { message = "ID inv·lido. O ID deve ser maior que zero." });
+                return BadRequest(new { message = "ID inv√°lido. O ID deve ser maior que zero." });
             }
 
             var deleted = await _disciplinaService.DeleteDisciplina(id);
@@ -127,7 +92,7 @@ namespace UniversidadeAPI.Controllers
                 return NoContent();
             }
 
-            return NotFound(new { message = $"Disciplina com ID {id} n„o encontrada." });
+            return NotFound(new { message = $"Disciplina com ID {id} n√£o encontrada." });
         }
     }
 }

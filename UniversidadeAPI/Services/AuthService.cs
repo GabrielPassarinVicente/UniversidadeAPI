@@ -1,7 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using UniversidadeAPI.Models;
 using UniversidadeAPI.Repositories;
@@ -21,18 +20,18 @@ namespace UniversidadeAPI.Services
 
         public async Task<LoginResponse> Login(LoginRequest request)
         {
-            // Buscar usuário por username
+            // Buscar usuï¿½rio por username
             var usuario = await _usuarioRepository.GetByUsername(request.Username);
 
             if (usuario == null)
             {
-                throw new UnauthorizedAccessException("Usuário ou senha inválidos");
+                throw new UnauthorizedAccessException("Usuï¿½rio ou senha invï¿½lidos");
             }
 
             // Verificar senha
             if (!VerifyPassword(request.Password, usuario.PasswordHash))
             {
-                throw new UnauthorizedAccessException("Usuário ou senha inválidos");
+                throw new UnauthorizedAccessException("Usuï¿½rio ou senha invï¿½lidos");
             }
 
             // Gerar token
@@ -50,26 +49,26 @@ namespace UniversidadeAPI.Services
 
         public async Task<Usuario> Register(RegistroRequest request)
         {
-            // Validações
+            // Validaï¿½ï¿½es
             if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
             {
-                throw new ArgumentException("Username e password são obrigatórios");
+                throw new ArgumentException("Username e password sï¿½o obrigatï¿½rios");
             }
 
             if (await _usuarioRepository.UsernameExists(request.Username))
             {
-                throw new ArgumentException("Username já está em uso");
+                throw new ArgumentException("Username jï¿½ estï¿½ em uso");
             }
 
             if (await _usuarioRepository.EmailExists(request.Email))
             {
-                throw new ArgumentException("Email já está em uso");
+                throw new ArgumentException("Email jï¿½ estï¿½ em uso");
             }
 
             // Hash da senha
             var passwordHash = HashPassword(request.Password);
 
-            // Criar novo usuário
+            // Criar novo usuï¿½rio
             var usuario = new Usuario
             {
                 Username = request.Username,
@@ -114,18 +113,19 @@ namespace UniversidadeAPI.Services
 
         private string HashPassword(string password)
         {
-            // Usar SHA256 para hash simples (para produção, use BCrypt ou PBKDF2)
-            using (var sha256 = SHA256.Create())
-            {
-                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(bytes);
-            }
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
         private bool VerifyPassword(string password, string passwordHash)
         {
-            var hash = HashPassword(password);
-            return hash == passwordHash;
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(password, passwordHash);
+            }
+            catch (BCrypt.Net.SaltParseException)
+            {
+                return false;
+            }
         }
     }
 }
